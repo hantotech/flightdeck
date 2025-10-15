@@ -31,6 +31,8 @@ FlightDeck focuses on **communication, procedures, and decision-making**—not a
 - **Smart routing** based on task complexity
 - **70% cost savings** compared to single-model approach
 - **RAG (Retrieval Augmented Generation)** grounded in FAA regulations
+- **FAR/AIM knowledge base** - 25+ verified regulations and procedures
+- **Zero hallucination** on critical safety information
 
 ### 📋 Interactive Checklists
 - Pre-flight exterior/interior inspections
