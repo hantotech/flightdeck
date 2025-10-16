@@ -7,6 +7,23 @@
     <string name="title_weather">Weather</string>
     <string name="title_settings">Settings</string>
 
+    <!-- Home Screen -->
+    <string name="home_welcome">Welcome to FlightDeck</string>
+    <string name="home_subtitle">Your AI-powered flight training companion</string>
+    <string name="home_quick_actions">Quick Actions</string>
+    <string name="home_learning">Learning Resources</string>
+    <string name="home_status">System Status</string>
+    <string name="home_atis_description">Check current weather and airport information</string>
+    <string name="home_atc_description">Practice radio communications with AI controller</string>
+    <string name="home_airport_description">Browse airports and view details</string>
+    <string name="home_knowledge_description">Study FAR/AIM regulations and aviation knowledge</string>
+    <string name="home_database_status">Database Status</string>
+    <string name="home_airports_loaded">Airports Loaded</string>
+    <string name="home_scenarios_loaded">Training Scenarios</string>
+    <string name="status_ready">Ready</string>
+    <string name="status_loading">Loading</string>
+    <string name="status_error">Error</string>
+
     <!-- ATIS Screen -->
     <string name="atis_title">ATIS / AWOS</string>
     <string name="atis_search_hint">Enter airport code (e.g., KPAO)</string>
@@ -43,6 +60,10 @@
     <string name="settings_gemini_key">Gemini API Key</string>
     <string name="settings_save">Save</string>
     <string name="settings_user_tier">User Tier</string>
+
+    <!-- Knowledge Base -->
+    <string name="knowledge_title">FAR/AIM Knowledge Base</string>
+    <string name="knowledge_search_hint">Search regulations...</string>
 
     <!-- Common -->
     <string name="loading">Loading...</string>
