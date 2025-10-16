@@ -1,6 +1,53 @@
 <resources>
     <string name="app_name">FlightDeck</string>
+
+    <!-- Navigation -->
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_practice">Practice</string>
+    <string name="title_weather">Weather</string>
+    <string name="title_settings">Settings</string>
+
+    <!-- ATIS Screen -->
+    <string name="atis_title">ATIS / AWOS</string>
+    <string name="atis_search_hint">Enter airport code (e.g., KPAO)</string>
+    <string name="atis_information">Information %s</string>
+    <string name="atis_time">Time: %s</string>
+    <string name="atis_wind">Wind: %s° at %skt</string>
+    <string name="atis_visibility">Visibility: %s SM</string>
+    <string name="atis_temperature">Temp: %s°C / Dewpoint: %s°C</string>
+    <string name="atis_altimeter">Altimeter: %s</string>
+    <string name="atis_runway">Runway %s in use</string>
+    <string name="atis_view_full">View Full Broadcast</string>
+    <string name="atis_copy">Copy to Clipboard</string>
+    <string name="atis_refresh">Refresh ATIS</string>
+
+    <!-- Airport Search -->
+    <string name="airport_search">Search Airports</string>
+    <string name="airport_search_hint">Search by ICAO, name, or city</string>
+    <string name="airport_nearby">Find Nearby</string>
+    <string name="airport_no_results">No airports found</string>
+
+    <!-- ATC Simulator -->
+    <string name="atc_title">ATC Simulator</string>
+    <string name="atc_select_scenario">Select Scenario</string>
+    <string name="atc_send">Send</string>
+    <string name="atc_type_message">Type your radio call...</string>
+    <string name="atc_scenario_ground">Ground Clearance</string>
+    <string name="atc_scenario_takeoff">Takeoff Clearance</string>
+    <string name="atc_scenario_landing">Landing Clearance</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_api_keys">API Configuration</string>
+    <string name="settings_claude_key">Claude API Key</string>
+    <string name="settings_gemini_key">Gemini API Key</string>
+    <string name="settings_save">Save</string>
+    <string name="settings_user_tier">User Tier</string>
+
+    <!-- Common -->
+    <string name="loading">Loading...</string>
+    <string name="error_generic">An error occurred</string>
+    <string name="search">Search</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 </resources>
