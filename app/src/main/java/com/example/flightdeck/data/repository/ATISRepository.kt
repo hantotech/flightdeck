@@ -94,10 +94,9 @@ class ATISRepository(
             val weather = weatherService.getMetar(icao).getOrThrow()
 
             // Determine active runway if not provided
-            val runway = activeRunway ?: determineActiveRunway(
-                airportData.runways,
-                weather.windDirection
-            )
+            val runway = activeRunway ?: weather.windDirection?.let { windDir ->
+                determineActiveRunway(airportData.runways, windDir)
+            }
 
             // Generate ATIS
             val atis = SampleATISGenerator.generateSampleATIS(

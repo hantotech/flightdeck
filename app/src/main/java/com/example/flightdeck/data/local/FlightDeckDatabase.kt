@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.flightdeck.data.local.dao.*
 import com.example.flightdeck.data.model.*
+import com.example.flightdeck.data.knowledge.AviationDocument
 
 @Database(
     entities = [

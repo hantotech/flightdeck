@@ -1,6 +1,7 @@
 package com.example.flightdeck.data.local
 
 import androidx.room.TypeConverter
+import com.example.flightdeck.data.model.SkyCondition
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -20,6 +21,18 @@ class Converters {
     fun toStringList(value: String?): List<String>? {
         if (value == null) return null
         val listType = object : TypeToken<List<String>>() {}.type
+        return gson.fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromSkyConditionList(value: List<SkyCondition>?): String? {
+        return gson.toJson(value)
+    }
+
+    @TypeConverter
+    fun toSkyConditionList(value: String?): List<SkyCondition>? {
+        if (value == null) return null
+        val listType = object : TypeToken<List<SkyCondition>>() {}.type
         return gson.fromJson(value, listType)
     }
 }

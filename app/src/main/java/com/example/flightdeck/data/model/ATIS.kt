@@ -1,5 +1,6 @@
 package com.example.flightdeck.data.model
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -15,6 +16,7 @@ data class ATISBroadcast(
     val broadcastType: BroadcastType,
     val informationCode: String,      // "Alpha", "Bravo", "Charlie", etc.
     val observationTime: String,      // "1856 Zulu"
+    @Embedded(prefix = "weather_")
     val weatherReport: WeatherReport,
     val activeRunway: String?,        // "Runway 31"
     val approachesInUse: String?,     // "ILS Runway 31 approach in use"
@@ -81,11 +83,17 @@ object ATISGenerator {
             append(generateWeatherReadback(broadcast.weatherReport))
 
             // Temperature and dewpoint
-            append("Temperature ${broadcast.weatherReport.temperature}, ")
-            append("dewpoint ${broadcast.weatherReport.dewpoint}. ")
+            broadcast.weatherReport.temperature?.let { temp ->
+                append("Temperature $temp, ")
+            }
+            broadcast.weatherReport.dewpoint?.let { dew ->
+                append("dewpoint $dew. ")
+            }
 
             // Altimeter
-            append("Altimeter ${formatAltimeter(broadcast.weatherReport.altimeter)}. ")
+            broadcast.weatherReport.altimeter?.let { alt ->
+                append("Altimeter ${formatAltimeter(alt)}. ")
+            }
 
             // Active runway
             if (broadcast.activeRunway != null) {
@@ -132,11 +140,17 @@ object ATISGenerator {
             append(generateWeatherReadback(broadcast.weatherReport))
 
             // Temperature and dewpoint
-            append("Temperature ${broadcast.weatherReport.temperature}, ")
-            append("dewpoint ${broadcast.weatherReport.dewpoint}. ")
+            broadcast.weatherReport.temperature?.let { temp ->
+                append("Temperature $temp, ")
+            }
+            broadcast.weatherReport.dewpoint?.let { dew ->
+                append("dewpoint $dew. ")
+            }
 
             // Altimeter
-            append("Altimeter ${formatAltimeter(broadcast.weatherReport.altimeter)}.")
+            broadcast.weatherReport.altimeter?.let { alt ->
+                append("Altimeter ${formatAltimeter(alt)}.")
+            }
         }
     }
 
@@ -146,22 +160,27 @@ object ATISGenerator {
     private fun generateWeatherReadback(weather: WeatherReport): String {
         return buildString {
             // Wind
-            if (weather.windSpeed > 0) {
-                append("Wind ${String.format("%03d", weather.windDirection)} ")
-                append("at ${weather.windSpeed}")
-                if (weather.windGust != null) {
-                    append(", gusts ${weather.windGust}")
+            val windSpeed = weather.windSpeed ?: 0
+            if (windSpeed > 0) {
+                weather.windDirection?.let { dir ->
+                    append("Wind ${String.format("%03d", dir)} ")
+                    append("at $windSpeed")
+                    weather.windGust?.let { gust ->
+                        append(", gusts $gust")
+                    }
+                    append(". ")
                 }
-                append(". ")
             } else {
                 append("Wind calm. ")
             }
 
             // Visibility
-            if (weather.visibility >= 10.0) {
-                append("Visibility one zero or greater. ")
-            } else {
-                append("Visibility ${formatVisibility(weather.visibility)}. ")
+            weather.visibility?.let { vis ->
+                if (vis >= 10.0) {
+                    append("Visibility one zero or greater. ")
+                } else {
+                    append("Visibility ${formatVisibility(vis)}. ")
+                }
             }
 
             // Sky conditions
@@ -170,7 +189,9 @@ object ATISGenerator {
             } else {
                 weather.skyConditions.forEach { condition ->
                     append("${condition.coverage.readback} ")
-                    append("${formatAltitude(condition.altitude)}. ")
+                    condition.altitude?.let { alt ->
+                        append("${formatAltitude(alt)}. ")
+                    }
                 }
             }
 
@@ -236,19 +257,6 @@ object ATISGenerator {
             else -> ""
         }
     }
-}
-
-/**
- * Sky coverage with proper aviation readback
- */
-enum class SkyCoverage(val readback: String) {
-    SKC("sky clear"),
-    CLR("clear"),
-    FEW("few"),
-    SCT("scattered"),
-    BKN("broken"),
-    OVC("overcast"),
-    VV("vertical visibility")  // For obscured ceiling
 }
 
 /**

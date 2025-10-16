@@ -124,11 +124,14 @@ class ATCRepository(
         } else ""
 
         // Build runway context string
-        val runwayContext = airportData.fold("") { acc, data ->
-            if (data.runways.isNotEmpty()) {
-                "\n\nACTIVE RUNWAYS:\n" + data.runways.take(2).joinToString(", ") { it.identifier }
-            } else acc
-        }
+        val runwayContext = airportData.fold(
+            onSuccess = { data ->
+                if (data.runways.isNotEmpty()) {
+                    "\n\nACTIVE RUNWAYS:\n" + data.runways.take(2).joinToString(", ") { it.identifier }
+                } else ""
+            },
+            onFailure = { "" }
+        )
 
         val enhancedConditions = scenario.situation + trafficContext + runwayContext
 

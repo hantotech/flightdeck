@@ -31,13 +31,14 @@ data class SkyCondition(
     val altitude: Int? // feet AGL
 )
 
-enum class SkyCoverage {
-    SKC,  // Sky Clear
-    FEW,  // Few clouds (1/8 to 2/8)
-    SCT,  // Scattered (3/8 to 4/8)
-    BKN,  // Broken (5/8 to 7/8)
-    OVC,  // Overcast (8/8)
-    OVX   // Obscured
+enum class SkyCoverage(val readback: String) {
+    SKC("sky clear"),
+    CLR("clear"),
+    FEW("few"),
+    SCT("scattered"),
+    BKN("broken"),
+    OVC("overcast"),
+    VV("vertical visibility")  // For obscured ceiling
 }
 
 /**

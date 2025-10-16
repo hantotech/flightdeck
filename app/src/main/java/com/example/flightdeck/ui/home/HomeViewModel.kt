@@ -8,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.flightdeck.data.local.FlightDeckDatabase
 import com.example.flightdeck.data.repository.AirportRepository
 import com.example.flightdeck.data.repository.ATCRepository
+import com.example.flightdeck.data.repository.TrafficSimulator
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /**
@@ -18,7 +20,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val db = FlightDeckDatabase.getDatabase(application)
     private val airportRepo = AirportRepository.getInstance(db.airportDao())
-    private val atcRepo = ATCRepository.getInstance(db.atcDao())
+    private val trafficSimulator = TrafficSimulator.getInstance(db.trafficDao(), airportRepo)
+    private val atcRepo = ATCRepository(db.atcDao(), airportRepo, trafficSimulator)
 
     // App Status
     private val _databaseStatus = MutableLiveData<DatabaseStatus>(DatabaseStatus.LOADING)
@@ -43,13 +46,13 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             try {
                 _databaseStatus.value = DatabaseStatus.LOADING
 
-                // Get airport count
-                val airports = airportRepo.getAllAirports()
-                _airportCount.value = airports.getOrNull()?.size ?: 0
+                // Get database stats
+                val stats = airportRepo.getDatabaseStats()
+                _airportCount.value = stats.totalAirports
 
-                // Get scenario count
-                val scenarios = atcRepo.getAllScenarios()
-                _scenarioCount.value = scenarios.getOrNull()?.size ?: 0
+                // Get scenario count - get first value from Flow
+                val scenarios = atcRepo.getAllScenarios().first()
+                _scenarioCount.value = scenarios.size
 
                 _databaseStatus.value = DatabaseStatus.READY
             } catch (e: Exception) {

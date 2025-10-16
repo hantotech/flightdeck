@@ -2,6 +2,7 @@ package com.example.flightdeck.utils
 
 import android.content.Context
 import com.example.flightdeck.data.knowledge.AIMContent
+import com.example.flightdeck.data.knowledge.AviationDocument
 import com.example.flightdeck.data.knowledge.AviationKnowledge
 import com.example.flightdeck.data.knowledge.FARContent
 import com.example.flightdeck.data.local.FlightDeckDatabase
@@ -324,6 +325,6 @@ object DatabaseInitializer {
             )
         )
 
-        aircraftDao.insertAircraft(aircraft)
+        aircraft.forEach { aircraftDao.insertAircraft(it) }
     }
 }
