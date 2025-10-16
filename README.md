@@ -36,6 +36,7 @@ FlightDeck focuses on **communication, procedures, and decision-making**—not a
 
 ### 📋 Interactive Checklists
 - Pre-flight exterior/interior inspections
+- **ATIS/AWOS weather broadcasts** - Realistic readbacks with information codes
 - Before engine start, takeoff, landing procedures
 - Emergency checklists
 - AI answers questions about any checklist item
@@ -158,6 +159,7 @@ Comprehensive guides available:
 - **[Setup Guide](SETUP_GUIDE.md)** - Detailed setup instructions
 - **[Hybrid AI Guide](HYBRID_AI_GUIDE.md)** - AI configuration and optimization
 - **[Airport & Traffic Guide](AIRPORT_TRAFFIC_GUIDE.md)** - Airport data and traffic simulation
+- **[ATIS/AWOS Guide](ATIS_GUIDE.md)** - Weather broadcast system for checklists
 - **[API Examples](API_EXAMPLES.md)** - Code usage examples
 - **[Project Status](PROJECT_STATUS.md)** - Current progress and roadmap
 
