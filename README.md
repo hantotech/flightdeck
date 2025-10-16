@@ -45,6 +45,8 @@ FlightDeck focuses on **communication, procedures, and decision-making**—not a
 - Ground, Tower, Approach, Departure scenarios
 - Real-time responses based on your messages
 - Intelligent evaluation with detailed feedback
+- **Realistic traffic simulation** - Practice with simulated aircraft
+- **Airport-specific data** - Actual runway and frequency information
 
 ### 🌤️ Live Weather Integration
 - Real-time METAR/TAF data
@@ -155,6 +157,7 @@ Comprehensive guides available:
 
 - **[Setup Guide](SETUP_GUIDE.md)** - Detailed setup instructions
 - **[Hybrid AI Guide](HYBRID_AI_GUIDE.md)** - AI configuration and optimization
+- **[Airport & Traffic Guide](AIRPORT_TRAFFIC_GUIDE.md)** - Airport data and traffic simulation
 - **[API Examples](API_EXAMPLES.md)** - Code usage examples
 - **[Project Status](PROJECT_STATUS.md)** - Current progress and roadmap
 
@@ -249,7 +252,9 @@ val guidance = checklistRepo.getItemGuidance(
 - [x] AI integration (Claude + Gemini)
 - [x] Smart routing orchestrator
 - [x] Weather API integration
-- [x] Knowledge base (RAG)
+- [x] Knowledge base (RAG with FAR/AIM)
+- [x] Airport database system
+- [x] Traffic simulation engine
 - [x] Repository layer
 - [x] Documentation
 
@@ -303,6 +308,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Anthropic** - Claude API for intelligent responses
 - **Google** - Gemini API with generous free tier
 - **Aviation Weather Center** - Real-time weather data
+- **OurAirports** - Public domain airport database
 
 ---
 

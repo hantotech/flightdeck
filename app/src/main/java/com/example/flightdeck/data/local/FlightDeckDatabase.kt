@@ -22,9 +22,14 @@ import com.example.flightdeck.data.model.*
         ATCResponse::class,
         PerformanceReport::class,
         Achievement::class,
-        UserProgress::class
+        UserProgress::class,
+        AviationDocument::class,
+        Airport::class,
+        Runway::class,
+        Frequency::class,
+        SimulatedTraffic::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -35,6 +40,9 @@ abstract class FlightDeckDatabase : RoomDatabase() {
     abstract fun flightPlanDao(): FlightPlanDao
     abstract fun atcDao(): ATCDao
     abstract fun performanceDao(): PerformanceDao
+    abstract fun knowledgeDao(): KnowledgeDao
+    abstract fun airportDao(): AirportDao
+    abstract fun trafficDao(): TrafficDao
 
     companion object {
         @Volatile

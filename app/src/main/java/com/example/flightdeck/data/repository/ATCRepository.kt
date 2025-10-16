@@ -11,9 +11,12 @@ import kotlinx.coroutines.flow.Flow
 /**
  * Repository for ATC-related operations
  * Combines local database with AI-powered interactions using smart routing
+ * Now includes real-time airport data and traffic simulation
  */
 class ATCRepository(
     private val atcDao: ATCDao,
+    private val airportRepository: AirportRepository,
+    private val trafficSimulator: TrafficSimulator,
     private val aiService: EnhancedAIService = EnhancedAIService.getInstance()
 ) {
 
@@ -33,17 +36,39 @@ class ATCRepository(
         val scenario = atcDao.getScenarioById(scenarioId)
             ?: throw IllegalArgumentException("Scenario not found")
 
-        val exchanges = atcDao.getScenarioExchanges(scenarioId)
-        // Assuming exchanges is a Flow, you'd need to collect first
-        // For simplicity, using 0 here - in production, collect the flow
-
         val session = ATCPracticeSession(
             scenarioId = scenarioId,
             startTime = System.currentTimeMillis(),
-            totalExchanges = 0 // Should be calculated from exchanges
+            totalExchanges = 0 // Will be updated as session progresses
         )
 
-        return atcDao.insertPracticeSession(session)
+        val sessionId = atcDao.insertPracticeSession(session)
+
+        // Get airport data
+        val airportData = airportRepository.getAirportByIcao(scenario.airport)
+
+        // Start traffic simulation if airport found
+        airportData.onSuccess { data ->
+            trafficSimulator.startSimulation(
+                sessionId = sessionId,
+                airport = data.airport,
+                density = getScenarioDensity(scenario)
+            )
+        }
+
+        return sessionId
+    }
+
+    /**
+     * Get appropriate traffic density for scenario
+     */
+    private fun getScenarioDensity(scenario: ATCScenario): TrafficDensity {
+        return when (scenario.difficulty) {
+            Difficulty.BEGINNER -> TrafficDensity.LIGHT
+            Difficulty.INTERMEDIATE -> TrafficDensity.MODERATE
+            Difficulty.ADVANCED -> TrafficDensity.BUSY
+            else -> TrafficDensity.MODERATE
+        }
     }
 
     suspend fun endPracticeSession(
@@ -61,18 +86,56 @@ class ATCRepository(
         )
 
         atcDao.updatePracticeSession(updatedSession)
+
+        // Stop traffic simulation
+        trafficSimulator.stopSimulation(sessionId)
     }
 
-    // AI-Powered Communication
+    // Airport & Traffic Information
+    suspend fun getAirportInfo(icao: String) = airportRepository.getAirportByIcao(icao)
+
+    suspend fun getRunways(icao: String) = airportRepository.getRunwaysForAirport(icao)
+
+    suspend fun getFrequencies(icao: String) = airportRepository.getFrequenciesForAirport(icao)
+
+    suspend fun getActiveTraffic(sessionId: Long) = trafficSimulator.getActiveTraffic(sessionId)
+
+    fun observeActiveTraffic(sessionId: Long) = trafficSimulator.observeActiveTraffic(sessionId)
+
+    suspend fun getTrafficAdvisories(sessionId: Long, userPosition: TrafficPosition) =
+        trafficSimulator.getTrafficAdvisories(sessionId, userPosition)
+
+    // AI-Powered Communication with Context
     suspend fun sendPilotMessage(
         sessionId: Long,
         scenario: ATCScenario,
-        pilotMessage: String
+        pilotMessage: String,
+        userPosition: TrafficPosition? = null
     ): Result<String> {
+        // Get airport data for enhanced context
+        val airportData = airportRepository.getAirportByIcao(scenario.airport)
+        val activeTraffic = trafficSimulator.getActiveTraffic(sessionId)
+
+        // Build traffic context string
+        val trafficContext = if (activeTraffic.isNotEmpty()) {
+            "\n\nCURRENT TRAFFIC:\n" + activeTraffic.take(5).joinToString("\n") { traffic ->
+                "- ${TrafficGenerator.generateTrafficAnnouncement(traffic)}"
+            }
+        } else ""
+
+        // Build runway context string
+        val runwayContext = airportData.fold("") { acc, data ->
+            if (data.runways.isNotEmpty()) {
+                "\n\nACTIVE RUNWAYS:\n" + data.runways.take(2).joinToString(", ") { it.identifier }
+            } else acc
+        }
+
+        val enhancedConditions = scenario.situation + trafficContext + runwayContext
+
         val context = ATCContext(
             airport = scenario.airport,
             scenarioType = scenario.scenarioType.name,
-            conditions = scenario.situation
+            conditions = enhancedConditions
         )
 
         return aiService.generateATCResponse(pilotMessage, context)

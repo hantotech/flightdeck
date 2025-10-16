@@ -48,25 +48,3 @@ enum class WaypointType {
     FIX,
     GPS
 }
-
-/**
- * Represents airport information
- */
-data class Airport(
-    val icao: String,
-    val iata: String?,
-    val name: String,
-    val city: String,
-    val country: String,
-    val latitude: Double,
-    val longitude: Double,
-    val elevation: Int, // feet
-    val runways: List<Runway> = emptyList()
-)
-
-data class Runway(
-    val identifier: String,
-    val length: Int, // feet
-    val width: Int, // feet
-    val surface: String
-)
