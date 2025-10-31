@@ -17,25 +17,74 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Welcome Header -->
+            <!-- Welcome Header with Greeting -->
             <TextView
-                android:id="@+id/welcomeText"
+                android:id="@+id/greetingText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home_welcome"
-                android:textSize="24sp"
+                android:text="Good morning, Pilot!"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="4dp"
+                tools:text="Good afternoon, Pilot!" />
 
             <TextView
                 android:id="@+id/subtitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home_subtitle"
+                android:text="Ready for today's training?"
                 android:textSize="14sp"
                 android:textColor="@color/text_secondary"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginBottom="16dp" />
+
+            <!-- Pilot Rank Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/rankCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                app:cardElevation="2dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/primary_light">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🎓 Your Rank:"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_on_primary"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/rankText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Private Pilot"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_on_primary"
+                        tools:text="Private Pilot" />
+
+                    <TextView
+                        android:id="@+id/rankStars"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⭐⭐⭐⭐"
+                        android:textSize="16sp"
+                        tools:text="⭐⭐⭐⭐" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- Quick Actions Section -->
             <TextView
@@ -47,227 +96,223 @@
                 android:textColor="@color/text_primary"
                 android:layout_marginBottom="16dp" />
 
-            <!-- ATIS Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/atisCard"
+            <!-- Quick Actions Grid (2x2) -->
+            <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/primary_light">
+                android:layout_marginBottom="24dp"
+                android:columnCount="2"
+                android:rowCount="2">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@drawable/ic_notifications_black_24dp"
-                        android:contentDescription="@string/atis_title"
-                        app:tint="@color/text_on_primary" />
+                <!-- Start Training Button -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/startTrainingCard"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="4dp"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="8dp"
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:layout_marginStart="16dp">
+                        android:gravity="center"
+                        android:padding="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/atis_title"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_on_primary" />
+                            android:text="🎯"
+                            android:textSize="36sp"
+                            android:layout_marginBottom="8dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/home_atis_description"
+                            android:text="Start\nTraining"
                             android:textSize="14sp"
-                            android:textColor="@color/white"
-                            android:layout_marginTop="4dp" />
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:gravity="center" />
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- ATC Practice Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/atcCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/accent_light">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@drawable/ic_dashboard_black_24dp"
-                        android:contentDescription="@string/atc_title"
-                        app:tint="@color/text_on_accent" />
+                <!-- ATC Practice Button -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/atcCard"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="4dp"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="8dp"
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:layout_marginStart="16dp">
+                        android:gravity="center"
+                        android:padding="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/atc_title"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_on_accent" />
+                            android:text="📡"
+                            android:textSize="36sp"
+                            android:layout_marginBottom="8dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/home_atc_description"
+                            android:text="ATC\nPractice"
                             android:textSize="14sp"
-                            android:textColor="@color/text_on_accent"
-                            android:layout_marginTop="4dp" />
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:gravity="center" />
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Airport Search Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/airportCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
-                android:clickable="true"
-                android:focusable="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@drawable/ic_home_black_24dp"
-                        android:contentDescription="@string/airport_search"
-                        app:tint="@color/primary" />
+                <!-- Check Weather Button -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/weatherCard"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="4dp"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="8dp"
+                    android:clickable="true"
+                    android:focusable="true">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:layout_marginStart="16dp">
+                        android:gravity="center"
+                        android:padding="16dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/airport_search"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/text_primary" />
+                            android:text="🌤️"
+                            android:textSize="36sp"
+                            android:layout_marginBottom="8dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/home_airport_description"
+                            android:text="Check\nWeather"
                             android:textSize="14sp"
-                            android:textColor="@color/text_secondary"
-                            android:layout_marginTop="4dp" />
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:gravity="center" />
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-            </com.google.android.material.card.MaterialCardView>
+                <!-- View Logbook Button -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/logbookCard"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="4dp"
+                    app:cardElevation="2dp"
+                    app:cardCornerRadius="8dp"
+                    android:clickable="true"
+                    android:focusable="true">
 
-            <!-- Learning Resources Section -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📊"
+                            android:textSize="36sp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="View\nLogbook"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </GridLayout>
+
+            <!-- Recent Activity Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home_learning"
+                android:text="Recent Activity"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Knowledge Base Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/knowledgeCard"
+            <!-- Recent Activity Container (will be populated programmatically) -->
+            <LinearLayout
+                android:id="@+id/recentActivityContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="8dp"
-                android:clickable="true"
-                android:focusable="true">
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
 
-                <LinearLayout
+                <!-- Placeholder when no activities -->
+                <TextView
+                    android:id="@+id/noActivityText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:text="No recent sessions. Start training to build your logbook!"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                    android:padding="16dp"
+                    android:gravity="center"
+                    android:visibility="visible" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/knowledge_title"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/text_primary" />
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home_knowledge_description"
-                        android:textSize="14sp"
-                        android:textColor="@color/text_secondary"
-                        android:layout_marginTop="4dp" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Status Section -->
+            <!-- This Week's Progress -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home_status"
+                android:text="This Week's Progress"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
-                android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp" />
 
-            <!-- App Status Card -->
+            <!-- Progress Stats Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -291,17 +336,17 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/home_database_status"
+                            android:text="🔥 Current Streak"
                             android:textColor="@color/text_secondary" />
 
                         <TextView
-                            android:id="@+id/databaseStatus"
+                            android:id="@+id/streakText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/status_ready"
+                            android:text="3 days"
                             android:textStyle="bold"
-                            android:textColor="@color/vfr"
-                            tools:text="Ready" />
+                            android:textColor="@color/text_primary"
+                            tools:text="3 days" />
 
                     </LinearLayout>
 
@@ -315,16 +360,41 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/home_airports_loaded"
+                            android:text="⏱️ Flight Time"
                             android:textColor="@color/text_secondary" />
 
                         <TextView
-                            android:id="@+id/airportCount"
+                            android:id="@+id/weeklyTimeText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="2h 15m"
                             android:textStyle="bold"
                             android:textColor="@color/text_primary"
-                            tools:text="5 airports" />
+                            tools:text="2h 15m" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="✅ Sessions Completed"
+                            android:textColor="@color/text_secondary" />
+
+                        <TextView
+                            android:id="@+id/weeklySessionsText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            tools:text="4" />
 
                     </LinearLayout>
 
@@ -337,16 +407,17 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/home_scenarios_loaded"
+                            android:text="📈 Proficiency Change"
                             android:textColor="@color/text_secondary" />
 
                         <TextView
-                            android:id="@+id/scenarioCount"
+                            android:id="@+id/proficiencyChangeText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="+8%"
                             android:textStyle="bold"
-                            android:textColor="@color/text_primary"
-                            tools:text="5 scenarios" />
+                            android:textColor="@color/vfr"
+                            tools:text="+8%" />
 
                     </LinearLayout>
 
