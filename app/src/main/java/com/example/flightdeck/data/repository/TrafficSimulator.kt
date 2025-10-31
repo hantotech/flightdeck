@@ -44,7 +44,7 @@ class TrafficSimulator(
     private fun getRealisticDensity(airport: Airport): TrafficDensity {
         return when {
             !airport.towerControlled -> TrafficDensity.LIGHT
-            airport.airspaceClass == AirspaceClass.B -> TrafficDensity.VERY_BUSY
+            airport.airspaceClass == AirspaceClass.B -> TrafficDensity.CONGESTED
             airport.airspaceClass == AirspaceClass.C -> TrafficDensity.BUSY
             airport.airspaceClass == AirspaceClass.D -> TrafficDensity.MODERATE
             airport.type == AirportType.LARGE_AIRPORT -> TrafficDensity.BUSY
@@ -62,7 +62,7 @@ class TrafficSimulator(
             TrafficDensity.LIGHT -> Random.nextInt(1, 4)
             TrafficDensity.MODERATE -> Random.nextInt(3, 7)
             TrafficDensity.BUSY -> Random.nextInt(6, 12)
-            TrafficDensity.VERY_BUSY -> Random.nextInt(10, 20)
+            TrafficDensity.CONGESTED -> Random.nextInt(10, 20)
         }
     }
 

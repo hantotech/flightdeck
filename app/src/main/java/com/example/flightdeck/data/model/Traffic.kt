@@ -95,14 +95,6 @@ data class TrafficDensityConfig(
     val typicalAircraftMix: AircraftMix
 )
 
-enum class TrafficDensity {
-    NONE,           // Uncontrolled, remote airports
-    LIGHT,          // 1-3 aircraft per 10 minutes
-    MODERATE,       // 4-8 aircraft per 10 minutes
-    BUSY,           // 9-15 aircraft per 10 minutes
-    VERY_BUSY       // 16+ aircraft per 10 minutes (Class B)
-}
-
 /**
  * Typical aircraft types at different airports
  */

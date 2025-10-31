@@ -32,7 +32,8 @@ enum class ATCScenarioType {
 enum class Difficulty {
     BEGINNER,
     INTERMEDIATE,
-    ADVANCED
+    ADVANCED,
+    EXPERT
 }
 
 /**

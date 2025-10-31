@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     // Room Database
     implementation("androidx.room:room-runtime:2.6.1")

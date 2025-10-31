@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home,
                 R.id.navigation_practice,
                 R.id.navigation_weather,
+                R.id.navigation_logbook,
                 R.id.navigation_settings
             )
         )

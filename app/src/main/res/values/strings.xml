@@ -5,6 +5,7 @@
     <string name="title_home">Home</string>
     <string name="title_practice">Practice</string>
     <string name="title_weather">Weather</string>
+    <string name="title_logbook">Logbook</string>
     <string name="title_settings">Settings</string>
 
     <!-- Home Screen -->

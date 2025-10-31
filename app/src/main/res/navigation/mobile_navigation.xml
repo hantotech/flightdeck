@@ -24,6 +24,12 @@
         tools:layout="@layout/fragment_atis" />
 
     <fragment
+        android:id="@+id/navigation_logbook"
+        android:name="com.example.flightdeck.ui.logbook.LogbookOverviewFragment"
+        android:label="@string/title_logbook"
+        tools:layout="@layout/fragment_logbook_overview" />
+
+    <fragment
         android:id="@+id/navigation_settings"
         android:name="com.example.flightdeck.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
