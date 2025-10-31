@@ -66,6 +66,22 @@
     <string name="knowledge_title">FAR/AIM Knowledge Base</string>
     <string name="knowledge_search_hint">Search regulations...</string>
 
+    <!-- Splash Screen -->
+    <string name="splash_tagline">AI-Powered Pilot Training</string>
+    <string name="app_version">Version 1.0.0 (Beta)</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">Welcome to FlightDeck</string>
+    <string name="onboarding_welcome_subtitle">Your Personal Flight Training Assistant</string>
+    <string name="onboarding_features_title">Practice ATC Communication</string>
+    <string name="onboarding_features_subtitle">• Realistic scenarios\n• AI-powered controllers\n• Instant feedback\n• Track proficiency</string>
+    <string name="onboarding_progress_title">Track Your Progress</string>
+    <string name="onboarding_progress_subtitle">• Digital logbook\n• 10 skill categories\n• Earn pilot ranks\n• Share achievements</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_get_started">Get Started</string>
+
     <!-- Common -->
     <string name="loading">Loading...</string>
     <string name="error_generic">An error occurred</string>
