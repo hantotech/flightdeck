@@ -62,10 +62,10 @@ class HomeFragment : Fragment() {
      * Setup click listeners for quick action cards
      */
     private fun setupClickListeners() {
-        // Start Training - Navigate to Practice tab (will show mission selection)
-        binding.startTrainingCard.setOnClickListener {
-            findNavController().navigate(R.id.navigation_practice)
-        }
+        // Start Training - HIDDEN for Phase 1 (Mission selection not ready)
+        // binding.startTrainingCard.setOnClickListener {
+        //     findNavController().navigate(R.id.navigation_practice)
+        // }
 
         // ATC Practice - Navigate to Practice tab
         binding.atcCard.setOnClickListener {

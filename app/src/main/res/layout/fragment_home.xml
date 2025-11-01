@@ -104,7 +104,8 @@
                 android:columnCount="2"
                 android:rowCount="2">
 
-                <!-- Start Training Button -->
+                <!-- Start Training Button - HIDDEN for Phase 1 (Mission selection not ready) -->
+                <!--
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/startTrainingCard"
                     android:layout_width="0dp"
@@ -144,6 +145,7 @@
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
+                -->
 
                 <!-- ATC Practice Button -->
                 <com.google.android.material.card.MaterialCardView

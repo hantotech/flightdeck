@@ -6,12 +6,81 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <!-- Scenario Info Card -->
+    <!-- Flight Entry Card -->
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/scenarioInfoCard"
+        android:id="@+id/flightEntryCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
+        android:layout_margin="16dp"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Practice Flight"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Departure Airport -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Departure (e.g., KPAO)"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/departureInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="4" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Arrival Airport -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Arrival (e.g., KSQL)"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/arrivalInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="4" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Start Practice Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/startPracticeButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Start Practice Session"
+                app:backgroundTint="@color/accent" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Session Info (shown when practice is active) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/sessionInfoCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:visibility="gone"
         app:cardElevation="2dp"
         app:cardCornerRadius="8dp"
         app:cardBackgroundColor="@color/primary_light"
@@ -23,52 +92,23 @@
             android:orientation="vertical"
             android:padding="12dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/scenarioTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    tools:text="Ground Clearance - VFR" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/changeScenarioButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:text="Change"
-                    android:textSize="12sp"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    app:strokeColor="@color/white"
-                    android:textColor="@color/white" />
-
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/scenarioSituation"
+                android:id="@+id/sessionTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="13sp"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:textColor="@color/white"
-                tools:text="Clear VFR day at Palo Alto. You're parked at the ramp, ready to taxi for runway 31." />
+                tools:text="KPAO → KSQL" />
 
             <TextView
-                android:id="@+id/airportInfo"
+                android:id="@+id/sessionInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:textColor="@color/white"
-                android:alpha="0.9"
-                tools:text="KPAO • Tower: 118.6" />
+                tools:text="VFR • Clear skies • Wind 310@8" />
 
         </LinearLayout>
 
@@ -83,16 +123,69 @@
         android:clipToPadding="false"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        app:layout_constraintTop_toBottomOf="@id/scenarioInfoCard"
-        app:layout_constraintBottom_toTopOf="@id/inputCard"
+        app:layout_constraintTop_toBottomOf="@id/flightEntryCard"
+        app:layout_constraintBottom_toTopOf="@id/voiceControlsCard"
         tools:listitem="@layout/item_chat_message" />
 
-    <!-- Input Card -->
+    <!-- Voice Controls Card -->
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/inputCard"
+        android:id="@+id/voiceControlsCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center">
+
+            <!-- Status Text -->
+            <TextView
+                android:id="@+id/voiceStatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Press and hold to talk"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Push-to-Talk Button -->
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/pttButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Push to Talk"
+                android:textColor="@color/white"
+                app:icon="@android:drawable/ic_btn_speak_now"
+                app:iconTint="@color/white"
+                app:backgroundTint="@color/accent" />
+
+            <!-- Text Input Toggle (for fallback) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/toggleInputButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Use Text Input"
+                android:textSize="12sp"
+                style="@style/Widget.MaterialComponents.Button.TextButton" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Text Input Card (hidden by default) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/textInputCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
+        android:visibility="gone"
         app:cardElevation="4dp"
         app:cardCornerRadius="24dp"
         app:layout_constraintBottom_toBottomOf="parent">

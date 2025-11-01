@@ -21,9 +21,12 @@
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_logbook" />
 
+    <!-- Settings hidden for Phase 1 - Focus on voice-based ATC practice -->
+    <!--
     <item
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/title_settings" />
+    -->
 
 </menu>
