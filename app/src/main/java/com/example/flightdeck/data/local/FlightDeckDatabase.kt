@@ -35,7 +35,7 @@ import com.example.flightdeck.data.knowledge.AviationDocument
         ProficiencyRating::class,
         LogbookTotals::class
     ],
-    version = 5,
+    version = 6, // Added isPremium field to Airport for free/premium tier
     exportSchema = false
 )
 @TypeConverters(Converters::class)

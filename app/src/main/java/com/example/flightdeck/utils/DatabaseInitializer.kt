@@ -40,13 +40,14 @@ object DatabaseInitializer {
     }
 
     /**
-     * Initialize airports with common US training airports
+     * Initialize airports with FREE TIER airports (30 major US/Canada training locations)
+     * Premium tier unlocks 20,000+ additional airports via OurAirports CSV
      */
     private suspend fun initializeAirports(db: FlightDeckDatabase) {
         val airportDao = db.airportDao()
 
         val airports = listOf(
-            // California airports
+            // ========== CALIFORNIA (5) ==========
             Airport(
                 icao = "KPAO",
                 iata = "PAO",
@@ -59,7 +60,8 @@ object DatabaseInitializer {
                 elevation = 4,
                 airspaceClass = AirspaceClass.E,
                 towerControlled = true,
-                type = AirportType.SMALL_AIRPORT
+                type = AirportType.SMALL_AIRPORT,
+                isPremium = false
             ),
             Airport(
                 icao = "KSFO",
@@ -73,7 +75,8 @@ object DatabaseInitializer {
                 elevation = 13,
                 airspaceClass = AirspaceClass.B,
                 towerControlled = true,
-                type = AirportType.LARGE_AIRPORT
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
             ),
             Airport(
                 icao = "KSJC",
@@ -87,7 +90,8 @@ object DatabaseInitializer {
                 elevation = 62,
                 airspaceClass = AirspaceClass.C,
                 towerControlled = true,
-                type = AirportType.LARGE_AIRPORT
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
             ),
             Airport(
                 icao = "KSQL",
@@ -101,21 +105,412 @@ object DatabaseInitializer {
                 elevation = 5,
                 airspaceClass = AirspaceClass.D,
                 towerControlled = true,
-                type = AirportType.SMALL_AIRPORT
+                type = AirportType.SMALL_AIRPORT,
+                isPremium = false
             ),
             Airport(
-                icao = "KHAF",
-                iata = "HAF",
-                name = "Half Moon Bay Airport",
-                city = "Half Moon Bay",
+                icao = "KLAX",
+                iata = "LAX",
+                name = "Los Angeles International",
+                city = "Los Angeles",
                 state = "CA",
                 country = "USA",
-                latitude = 37.513,
-                longitude = -122.500,
-                elevation = 66,
-                airspaceClass = AirspaceClass.G,
-                towerControlled = false,
-                type = AirportType.SMALL_AIRPORT
+                latitude = 33.9425,
+                longitude = -118.408,
+                elevation = 125,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+
+            // ========== PACIFIC NORTHWEST (3) ==========
+            Airport(
+                icao = "KSEA",
+                iata = "SEA",
+                name = "Seattle-Tacoma International",
+                city = "Seattle",
+                state = "WA",
+                country = "USA",
+                latitude = 47.449,
+                longitude = -122.309,
+                elevation = 433,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KPDX",
+                iata = "PDX",
+                name = "Portland International",
+                city = "Portland",
+                state = "OR",
+                country = "USA",
+                latitude = 45.5887,
+                longitude = -122.5975,
+                elevation = 31,
+                airspaceClass = AirspaceClass.C,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KBFI",
+                iata = "BFI",
+                name = "Boeing Field/King County International",
+                city = "Seattle",
+                state = "WA",
+                country = "USA",
+                latitude = 47.53,
+                longitude = -122.302,
+                elevation = 21,
+                airspaceClass = AirspaceClass.D,
+                towerControlled = true,
+                type = AirportType.MEDIUM_AIRPORT,
+                isPremium = false
+            ),
+
+            // ========== SOUTHWEST (3) ==========
+            Airport(
+                icao = "KPHX",
+                iata = "PHX",
+                name = "Phoenix Sky Harbor International",
+                city = "Phoenix",
+                state = "AZ",
+                country = "USA",
+                latitude = 33.4343,
+                longitude = -112.0116,
+                elevation = 1135,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KLAS",
+                iata = "LAS",
+                name = "Las Vegas McCarran International",
+                city = "Las Vegas",
+                state = "NV",
+                country = "USA",
+                latitude = 36.0840,
+                longitude = -115.1537,
+                elevation = 2181,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KDEN",
+                iata = "DEN",
+                name = "Denver International",
+                city = "Denver",
+                state = "CO",
+                country = "USA",
+                latitude = 39.8617,
+                longitude = -104.6731,
+                elevation = 5434,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+
+            // ========== TEXAS (4) ==========
+            Airport(
+                icao = "KDFW",
+                iata = "DFW",
+                name = "Dallas/Fort Worth International",
+                city = "Dallas",
+                state = "TX",
+                country = "USA",
+                latitude = 32.8968,
+                longitude = -97.0380,
+                elevation = 607,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KIAH",
+                iata = "IAH",
+                name = "George Bush Intercontinental",
+                city = "Houston",
+                state = "TX",
+                country = "USA",
+                latitude = 29.9902,
+                longitude = -95.3368,
+                elevation = 97,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KAUS",
+                iata = "AUS",
+                name = "Austin-Bergstrom International",
+                city = "Austin",
+                state = "TX",
+                country = "USA",
+                latitude = 30.1945,
+                longitude = -97.6699,
+                elevation = 542,
+                airspaceClass = AirspaceClass.C,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KSAT",
+                iata = "SAT",
+                name = "San Antonio International",
+                city = "San Antonio",
+                state = "TX",
+                country = "USA",
+                latitude = 29.5337,
+                longitude = -98.4698,
+                elevation = 809,
+                airspaceClass = AirspaceClass.C,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+
+            // ========== MIDWEST (4) ==========
+            Airport(
+                icao = "KORD",
+                iata = "ORD",
+                name = "Chicago O'Hare International",
+                city = "Chicago",
+                state = "IL",
+                country = "USA",
+                latitude = 41.9786,
+                longitude = -87.9048,
+                elevation = 672,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KMSP",
+                iata = "MSP",
+                name = "Minneapolis-St Paul International",
+                city = "Minneapolis",
+                state = "MN",
+                country = "USA",
+                latitude = 44.8848,
+                longitude = -93.2223,
+                elevation = 841,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KDTW",
+                iata = "DTW",
+                name = "Detroit Metropolitan Wayne County",
+                city = "Detroit",
+                state = "MI",
+                country = "USA",
+                latitude = 42.2124,
+                longitude = -83.3534,
+                elevation = 645,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KCLE",
+                iata = "CLE",
+                name = "Cleveland Hopkins International",
+                city = "Cleveland",
+                state = "OH",
+                country = "USA",
+                latitude = 41.4117,
+                longitude = -81.8498,
+                elevation = 791,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+
+            // ========== SOUTHEAST (4) ==========
+            Airport(
+                icao = "KATL",
+                iata = "ATL",
+                name = "Hartsfield-Jackson Atlanta International",
+                city = "Atlanta",
+                state = "GA",
+                country = "USA",
+                latitude = 33.6367,
+                longitude = -84.4281,
+                elevation = 1026,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KMIA",
+                iata = "MIA",
+                name = "Miami International",
+                city = "Miami",
+                state = "FL",
+                country = "USA",
+                latitude = 25.7932,
+                longitude = -80.2906,
+                elevation = 8,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KMCO",
+                iata = "MCO",
+                name = "Orlando International",
+                city = "Orlando",
+                state = "FL",
+                country = "USA",
+                latitude = 28.4294,
+                longitude = -81.3089,
+                elevation = 96,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KTPA",
+                iata = "TPA",
+                name = "Tampa International",
+                city = "Tampa",
+                state = "FL",
+                country = "USA",
+                latitude = 27.9755,
+                longitude = -82.5332,
+                elevation = 26,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+
+            // ========== NORTHEAST (4) ==========
+            Airport(
+                icao = "KJFK",
+                iata = "JFK",
+                name = "John F Kennedy International",
+                city = "New York",
+                state = "NY",
+                country = "USA",
+                latitude = 40.6398,
+                longitude = -73.7789,
+                elevation = 13,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KBOS",
+                iata = "BOS",
+                name = "Boston Logan International",
+                city = "Boston",
+                state = "MA",
+                country = "USA",
+                latitude = 42.3643,
+                longitude = -71.0052,
+                elevation = 20,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KDCA",
+                iata = "DCA",
+                name = "Ronald Reagan Washington National",
+                city = "Washington",
+                state = "DC",
+                country = "USA",
+                latitude = 38.8521,
+                longitude = -77.0377,
+                elevation = 15,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "KPHL",
+                iata = "PHL",
+                name = "Philadelphia International",
+                city = "Philadelphia",
+                state = "PA",
+                country = "USA",
+                latitude = 39.8719,
+                longitude = -75.2411,
+                elevation = 36,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+
+            // ========== CANADA (3) ==========
+            Airport(
+                icao = "CYYZ",
+                iata = "YYZ",
+                name = "Toronto Pearson International",
+                city = "Toronto",
+                state = "ON",
+                country = "Canada",
+                latitude = 43.6777,
+                longitude = -79.6248,
+                elevation = 569,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "CYVR",
+                iata = "YVR",
+                name = "Vancouver International",
+                city = "Vancouver",
+                state = "BC",
+                country = "Canada",
+                latitude = 49.1947,
+                longitude = -123.1815,
+                elevation = 14,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
+            ),
+            Airport(
+                icao = "CYUL",
+                iata = "YUL",
+                name = "Montreal Pierre Elliott Trudeau International",
+                city = "Montreal",
+                state = "QC",
+                country = "Canada",
+                latitude = 45.4706,
+                longitude = -73.7408,
+                elevation = 118,
+                airspaceClass = AirspaceClass.B,
+                towerControlled = true,
+                type = AirportType.LARGE_AIRPORT,
+                isPremium = false
             )
         )
 

@@ -22,6 +22,7 @@ data class Airport(
     val airspaceClass: AirspaceClass?,
     val towerControlled: Boolean = false,
     val type: AirportType,
+    val isPremium: Boolean = false, // Premium tier required
     val lastUpdated: Long = System.currentTimeMillis()
 )
 
