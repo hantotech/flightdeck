@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_home_to_mission_selection"
             app:destination="@id/missionSelectionFragment" />
+        <action
+            android:id="@+id/action_home_to_flight_planning"
+            app:destination="@id/flightPlanningFragment" />
     </fragment>
 
     <fragment
@@ -20,6 +23,12 @@
         android:name="com.example.flightdeck.ui.mission.MissionSelectionFragment"
         android:label="Select Mission"
         tools:layout="@layout/fragment_mission_selection" />
+
+    <fragment
+        android:id="@+id/flightPlanningFragment"
+        android:name="com.example.flightdeck.ui.flightplanning.FlightPlanningFragment"
+        android:label="Plan Your Flight"
+        tools:layout="@layout/fragment_flight_planning" />
 
     <fragment
         android:id="@+id/navigation_practice"

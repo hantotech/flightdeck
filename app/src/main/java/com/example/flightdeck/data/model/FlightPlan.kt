@@ -21,7 +21,14 @@ data class FlightPlan(
     val alternateAirport: String? = null,
     val remarks: String = "",
     val createdAt: Long = System.currentTimeMillis(),
-    val isActive: Boolean = false
+    val isActive: Boolean = false,
+
+    // Favorite routes functionality
+    val isFavorite: Boolean = false,
+    val customName: String? = null,
+    val timesFlown: Int = 0,
+    val averageScore: Float? = null,
+    val lastFlownDate: Long? = null
 )
 
 /**

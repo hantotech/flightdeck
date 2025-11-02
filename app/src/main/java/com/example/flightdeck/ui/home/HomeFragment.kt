@@ -67,9 +67,9 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_home_to_mission_selection)
         }
 
-        // ATC Practice - Navigate to Practice tab
-        binding.atcCard.setOnClickListener {
-            findNavController().navigate(R.id.navigation_practice)
+        // Plan Flight - Navigate to Flight Planning
+        binding.planFlightCard.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_flight_planning)
         }
 
         // Check Weather - Navigate to Weather tab

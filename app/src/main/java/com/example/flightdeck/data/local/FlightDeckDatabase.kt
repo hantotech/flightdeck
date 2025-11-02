@@ -35,7 +35,7 @@ import com.example.flightdeck.data.knowledge.AviationDocument
         ProficiencyRating::class,
         LogbookTotals::class
     ],
-    version = 6, // Added isPremium field to Airport for free/premium tier
+    version = 7, // Added favorite routes fields to FlightPlan (isFavorite, customName, timesFlown, averageScore, lastFlownDate)
     exportSchema = false
 )
 @TypeConverters(Converters::class)
