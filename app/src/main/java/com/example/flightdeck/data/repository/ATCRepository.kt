@@ -1,7 +1,14 @@
 package com.example.flightdeck.data.repository
 
 import com.example.flightdeck.data.local.dao.ATCDao
-import com.example.flightdeck.data.model.*
+import com.example.flightdeck.data.model.ATCScenario
+import com.example.flightdeck.data.model.ATCScenarioType
+import com.example.flightdeck.data.model.Difficulty
+import com.example.flightdeck.data.model.ATCPracticeSession
+import com.example.flightdeck.data.model.TrafficDensity
+import com.example.flightdeck.data.model.ATCResponse
+import com.example.flightdeck.data.model.TrafficPosition
+import com.example.flightdeck.data.model.TrafficGenerator
 import com.example.flightdeck.data.remote.ai.EnhancedAIService
 import com.example.flightdeck.data.remote.ai.ATCContext
 import com.example.flightdeck.data.remote.ai.ATCEvaluation

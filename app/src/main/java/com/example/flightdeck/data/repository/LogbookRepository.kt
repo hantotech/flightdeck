@@ -1,7 +1,19 @@
 package com.example.flightdeck.data.repository
 
 import com.example.flightdeck.data.local.dao.LogbookDao
-import com.example.flightdeck.data.model.*
+import com.example.flightdeck.data.model.LogbookEntry
+import com.example.flightdeck.data.model.Difficulty
+import com.example.flightdeck.data.model.SkillCategory
+import com.example.flightdeck.data.model.ProficiencyRating
+import com.example.flightdeck.data.model.LogbookTotals
+import com.example.flightdeck.data.model.LogbookSessionSummary
+import com.example.flightdeck.data.model.SessionSkillBreakdown
+import com.example.flightdeck.data.model.ProficiencyLevel
+import com.example.flightdeck.data.model.LogbookPeriodSummary
+import com.example.flightdeck.data.model.LogbookExportData
+import com.example.flightdeck.data.model.UserExportInfo
+import com.example.flightdeck.data.model.toFlightHours
+import com.example.flightdeck.data.model.getFormattedDate
 import com.example.flightdeck.utils.ProficiencyCalculator
 import com.example.flightdeck.utils.PilotRank
 import kotlinx.coroutines.flow.Flow
@@ -214,8 +226,8 @@ class LogbookRepository(
             emergenciesHandled = current.emergenciesHandled + entry.emergenciesDeclared,
             goAroundsExecuted = current.goAroundsExecuted + entry.goArounds,
             weatherDiversions = current.weatherDiversions + entry.weatherDiversions,
-            totalChallengesCompleted = current.totalChallengesCompleted + entry.getChallengesList().size,
-            uniqueChallengesCompleted = allEntries.flatMap { it.getChallengesList() }.distinct().size,
+            totalChallengesCompleted = 0, // TODO: Re-implement challenge tracking in Phase 2
+            uniqueChallengesCompleted = 0, // TODO: Re-implement challenge tracking in Phase 2
             beginnerMissions = difficultyCounts[Difficulty.BEGINNER] ?: 0,
             intermediateMissions = difficultyCounts[Difficulty.INTERMEDIATE] ?: 0,
             advancedMissions = difficultyCounts[Difficulty.ADVANCED] ?: 0,
@@ -299,7 +311,7 @@ class LogbookRepository(
             if (entry.goArounds > 0) add("Successfully executed ${entry.goArounds} go-around(s)")
             if (entry.emergenciesDeclared > 0) add("Handled emergency situation professionally")
             if (entry.frequencyChanges >= 5) add("Managed ${entry.frequencyChanges} frequency changes")
-            if (entry.getChallengesList().isNotEmpty()) add("Completed ${entry.getChallengesList().size} challenge(s)")
+            // TODO: Re-add challenge tracking in Phase 2
         }
 
         val areasNeedingWork = skillBreakdowns
@@ -347,8 +359,8 @@ class LogbookRepository(
             .take(3)
             .map { it.skillCategory to it.currentScore }
 
-        // Challenges completed
-        val challengesCompleted = entries.flatMap { it.getChallengesList() }.size
+        // Challenges completed - TODO: Re-implement in Phase 2
+        val challengesCompleted = 0
 
         // Difficulties attempted
         val difficultiesAttempted = entries.groupingBy { it.difficulty }.eachCount()

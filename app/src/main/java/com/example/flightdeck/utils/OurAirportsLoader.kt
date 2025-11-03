@@ -2,7 +2,13 @@ package com.example.flightdeck.utils
 
 import android.content.Context
 import com.example.flightdeck.data.local.FlightDeckDatabase
-import com.example.flightdeck.data.model.*
+import com.example.flightdeck.data.model.Airport
+import com.example.flightdeck.data.model.AirportType
+import com.example.flightdeck.data.model.AirspaceClass
+import com.example.flightdeck.data.model.Runway
+import com.example.flightdeck.data.model.SurfaceType
+import com.example.flightdeck.data.model.Frequency
+import com.example.flightdeck.data.model.FrequencyType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader

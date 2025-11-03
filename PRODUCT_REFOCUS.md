@@ -207,29 +207,32 @@ android.speech.tts.TextToSpeech
 
 ## 💰 Revised Pricing Strategy
 
-### **Competing with ARSim ($40 one-time)**
+### **Competing with ARSim ($50-100 one-time)**
 
-**Option 1: One-Time Purchase (Recommended)**
-- $29.99 one-time
+**PRIMARY STRATEGY: Two-Tier One-Time Purchase**
+
+**Free Tier:**
+- 30 curated airports (major airports across US/Canada)
+- 50 practice sessions included
+- Basic scenarios (ground, tower)
+- **Goal:** Let users try it, prove it works
+
+**Premium Tier: $19.99 ONE-TIME**
 - Unlimited practice sessions
-- All airports included
-- Free updates for 1 year
+- All 20,000+ airports (premium database)
+- Advanced scenarios (approach, departure, emergencies)
+- Detailed performance analytics
+- Export practice history
 
-**Why this works:**
-- Students prefer one-time (already spending $10K+ on training)
-- Lower than ARSim but justified by AI features
-- No subscription fatigue
-- Can upsell premium features later
+**Why this wins:**
+- $19.99 is **impulse-buy territory** vs ARSim's $50-100
+- Undercuts competition by 60-80%
+- One-time purchase removes subscription friction
+- Free tier is generous enough to prove value (50 sessions = ~10 hours practice)
+- Premium upgrade happens when they want "my airport" or unlimited practice
+- Students already spending $10K+ on training - $20 is nothing
 
-**Option 2: Freemium**
-- Free: 5 practice sessions/month
-- Pro ($19.99 one-time): Unlimited sessions + logbook export
-- School ($99 one-time): Unlimited + CFI dashboard
-
-**Option 3: Hybrid (If AI costs are too high)**
-- $9.99 one-time for app
-- $0.99/session for AI-powered scenarios (buy packs of 10 for $7.99)
-- This covers AI API costs while keeping entry price low
+**DO NOT charge monthly for AI interactions** - that's user-hostile and kills our advantage
 
 ---
 
@@ -241,16 +244,19 @@ android.speech.tts.TextToSpeech
 - Those doing cross-country solos: ~120,000 (70%)
 - Android users: ~72,000 (60%)
 - Will download free/trial: 10% = 7,200
-- Will convert to paid: 30% = **2,160 paying users** (higher than before because focused use case)
+- Will convert to paid: 30% = **2,160 paying users** (higher because focused use case + low price)
 
-**Revenue at $29.99 one-time:**
-- 2,160 users × $29.99 = **$64,776 initial revenue**
-- Year 2 (new students): 2,160 × $29.99 = **$64,776**
-- **~$65K/year sustainable**
+**Revenue at $19.99 one-time:**
+- 2,160 users × $19.99 = **$43,178 initial revenue**
+- Year 2 (new students): 2,160 × $19.99 = **$43,178**
+- **~$43K/year sustainable revenue**
 
 **This is a sustainable side business, not a VC-scale startup.**
 
-**Upside:** Flight schools could buy 10-20 licenses. 50 flight schools × 15 licenses × $29.99 = additional $22,500/year
+**Upside scenarios:**
+- Flight schools could buy 10-20 licenses: 50 schools × 15 licenses × $19.99 = $14,992/year additional
+- Higher conversion due to impulse pricing: 40% conversion = 2,880 users × $19.99 = $57,571/year
+- iOS version (if developed): doubles addressable market
 
 ---
 

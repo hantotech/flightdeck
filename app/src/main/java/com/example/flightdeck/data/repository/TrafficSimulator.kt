@@ -1,7 +1,15 @@
 package com.example.flightdeck.data.repository
 
 import com.example.flightdeck.data.local.dao.TrafficDao
-import com.example.flightdeck.data.model.*
+import com.example.flightdeck.data.model.Airport
+import com.example.flightdeck.data.model.TrafficDensity
+import com.example.flightdeck.data.model.TrafficGenerator
+import com.example.flightdeck.data.model.AirspaceClass
+import com.example.flightdeck.data.model.AirportType
+import com.example.flightdeck.data.model.SimulatedTraffic
+import com.example.flightdeck.data.model.TrafficPosition
+import com.example.flightdeck.data.model.TrafficEvent
+import com.example.flightdeck.data.model.TrafficEventType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow

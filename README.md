@@ -1,186 +1,104 @@
-# ✈️ FlightDeck - AI-Powered Pilot Training App
+# ✈️ FlightDeck - AI-Powered Voice ATC Practice
+
+**The smarter alternative to ARSim.**
+
+Practice radio communication with an AI controller that talks back, adapts to your skill level, and coaches you in real-time.
 
 [![Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com/)
 [![Kotlin](https://img.shields.io/badge/Language-Kotlin-blue.svg)](https://kotlinlang.org/)
-[![Build](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](https://github.com/hantotech/flightdeck)
-[![Progress](https://img.shields.io/badge/Progress-50%25-yellow.svg)](REFINEMENT_PROGRESS.md)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-**FlightDeck** is a revolutionary pilot training application that simulates pre-flight procedures, ATC communication, and flight planning using advanced AI technology. Practice realistic aviation scenarios without leaving the ground.
-
-## 🎉 What's New
-
-### Latest Updates (October 2025)
-
-✨ **Digital Logbook System** - Complete proficiency tracking with 10 skill categories
-✨ **Mission Configuration** - 26 challenge modules with customizable difficulty
-✨ **Sample Data** - 8 realistic training sessions pre-loaded for demo
-✨ **Dependency Injection** - Clean architecture with AppContainer pattern
-✨ **Build Success** - App compiles and ready for testing! 🚀
-
-See [REFINEMENT_PROGRESS.md](REFINEMENT_PROGRESS.md) for detailed updates.
 
 ---
 
 ## 🎯 What is FlightDeck?
 
-FlightDeck provides student pilots and aviation enthusiasts with a comprehensive training environment to practice:
+FlightDeck is a **voice-based ATC practice app** that uses AI to simulate realistic radio communications. Enter your departure and arrival airports, and practice with an AI-powered controller that uses real weather and generates realistic traffic scenarios.
 
-- ✈️ **Pre-flight checklists** - Interactive walkthroughs with AI guidance
-- 📡 **ATC communication** - Real-time simulation with AI controllers
-- 🗺️ **Flight planning** - Route planning with live weather integration
-- 📊 **Performance tracking** - Detailed reports and progress monitoring
-- 🎓 **AI instructor feedback** - Learn from intelligent, context-aware evaluations
+**Perfect for:**
+- ✈️ Student pilots preparing for first solo
+- 🎓 Pilots practicing for checkrides
+- 🌐 International pilots learning US phraseology
+- 📻 Anyone nervous about radio communication
 
-### Not a Flight Simulator
+---
 
-FlightDeck focuses on **communication, procedures, and decision-making**—not aircraft physics or 3D graphics. Think of it as your personal CFI (Certified Flight Instructor) available 24/7.
-
-### How FlightDeck Compares to ARSim
-
-While **ARSim** focuses exclusively on ATC communication practice, **FlightDeck** provides a comprehensive training environment:
+## 🏆 Why FlightDeck vs ARSim?
 
 | Feature | ARSim | FlightDeck |
 |---------|-------|------------|
-| ATC Communication | ✅ Voice-based | ✅ Text & AI-based (voice planned) |
-| Digital Logbook | ❌ | ✅ Full proficiency tracking |
-| Mission Customization | ❌ | ✅ 26 challenge modules |
-| Weather Integration | ✅ Basic | ✅ Real-time METAR/TAF |
-| Checklists | ❌ | ✅ Interactive with AI help |
-| Flight Planning | ❌ | ✅ Route planning |
-| Progress Tracking | Basic | ✅ 10 skill categories, ranks |
-| AI Instructor | ❌ | ✅ Context-aware feedback |
+| **Voice practice** | ✅ Pre-recorded scripts | ✅ AI-powered, infinite variety |
+| **Adapts to mistakes** | ❌ Rigid scripts | ✅ Real-time coaching |
+| **Scenario variety** | Limited patterns | ✅ AI generates infinite scenarios |
+| **Practice YOUR flight** | ❌ Generic scenarios | ✅ Enter KPAO→KSQL, practice that exact route |
+| **Real weather** | ❌ | ✅ Uses actual METAR/TAF forecasts |
+| **Personalized feedback** | Basic scores | ✅ Detailed coaching + suggestions |
+| **Price** | $50-100 one-time | **$19.99 one-time** |
+| **Airport database** | Limited | ✅ 20,000+ US/Canada airports |
+| **Progress tracking** | Basic | ✅ Digital logbook with proficiency tracking |
 
-**FlightDeck = ARSim + Complete Training Suite**
-
----
-
-## ✨ Key Features
-
-### 🤖 Hybrid AI System
-- **4 AI models** working together (Claude Sonnet, Haiku, Gemini Flash, Pro)
-- **Smart routing** based on task complexity
-- **70% cost savings** compared to single-model approach
-- **RAG (Retrieval Augmented Generation)** grounded in FAA regulations
-- **FAR/AIM knowledge base** - 25+ verified regulations and procedures
-- **Zero hallucination** on critical safety information
-
-### 📋 Interactive Checklists
-- Pre-flight exterior/interior inspections
-- **ATIS/AWOS weather broadcasts** - Realistic readbacks with information codes
-- Before engine start, takeoff, landing procedures
-- Emergency checklists
-- AI answers questions about any checklist item
-
-### 📡 ATC Communication Simulator
-- Practice radio calls with AI controllers
-- Ground, Tower, Approach, Departure scenarios
-- Real-time responses based on your messages
-- Intelligent evaluation with detailed feedback
-- **Realistic traffic simulation** - Practice with simulated aircraft
-- **Airport-specific data** - Actual runway and frequency information
-
-### 🌤️ Live Weather Integration
-- Real-time METAR/TAF data
-- Flight category determination (VFR/MVFR/IFR/LIFR)
-- Weather-aware flight planning
-
-### 📊 Digital Logbook & Analytics
-- **Complete digital logbook** - Track all training sessions
-- **10 skill categories** - Radio, Navigation, Weather, Traffic, Emergencies, etc.
-- **5 proficiency levels** - From Unsatisfactory to Expert
-- **Pilot ranking system** - Student Pilot to Master CFI
-- **Trend analysis** - Visualize improvement over time
-- **Performance metrics** - Detailed scoring and feedback
-- **Export functionality** - CSV export for records
-
-### 🎯 Customizable Mission System
-- **Flexible difficulty levels** - Beginner to Expert
-- **26 challenge modules** - Mix and match scenarios
-- **6 challenge categories** - Communication, Traffic, Weather, Emergency, Operational, Advanced
-- **"Choose your own adventure"** - Build custom training missions
-- **Progressive difficulty** - Missions adapt to your skill level
-- **10 preset missions** - From "First Solo" to "Total Emergency"
+**The key difference:** ARSim teaches you to repeat scripts. FlightDeck teaches you to think like a pilot.
 
 ---
 
-## 🏗️ Architecture
+## 🎤 How It Works
 
-### Tech Stack
+1. **Choose your flight** - Enter departure and arrival airports (e.g., KPAO → KSQL)
+2. **Press to talk** - Use real push-to-talk interface like in the plane
+3. **AI responds** - Realistic controller voice with proper phraseology
+4. **Get instant feedback** - AI tells you what was good and what to improve
+5. **Practice unlimited** - No session limits, no subscription
 
-- **Language**: Kotlin
-- **Architecture**: MVVM with Repository pattern
-- **Dependency Injection**: Manual DI with AppContainer
-- **Database**: Room (SQLite)
-- **UI**: View Binding, Material Design 3, Navigation Component
-- **Networking**: Retrofit + OkHttp
-- **Async**: Kotlin Coroutines + Flow
-- **AI**: Claude API (Anthropic) + Gemini API (Google)
-- **Preferences**: DataStore
-
-### AI Integration
+### Example Session:
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                  AI ORCHESTRATOR                         │
-│            (Smart Routing Engine)                        │
-└────────┬────────────────────────────────────┬───────────┘
-         │                                    │
-    ┌────▼────────┐                    ┌─────▼─────────┐
-    │   CLAUDE    │                    │    GEMINI     │
-    │             │                    │               │
-    │  Sonnet 3.5 │◄─── Evaluations    │   Flash 1.5   │◄─── Speed
-    │  Haiku 3    │◄─── Real-time      │   Pro 1.5     │◄─── Fallback
-    └─────────────┘                    └───────────────┘
-```
+👨‍✈️ YOU (speaking): "Palo Alto Ground, Skyhawk N12345,
+                     VFR to San Carlos with information Alpha"
 
-### Project Structure
+🎧 AI CONTROLLER: "Skyhawk N12345, Palo Alto Ground,
+                   taxi to runway 31 via Alpha,
+                   expect right downwind departure"
 
-```
-FlightDeck/
-├── data/
-│   ├── model/              # Data classes (25+ entities)
-│   ├── local/              # Room database & DAOs
-│   ├── remote/             # API services (AI, Weather)
-│   ├── repository/         # Repository layer (6 repositories)
-│   ├── preferences/        # User preferences
-│   └── knowledge/          # Aviation knowledge base (RAG)
-├── di/                     # Dependency injection
-│   ├── AppContainer.kt     # DI container
-│   └── ViewModelFactory.kt # ViewModel factory
-├── ui/                     # UI components
-│   ├── home/               # Dashboard
-│   ├── logbook/            # Digital logbook (✅ Complete)
-│   ├── practice/           # ATC simulator
-│   ├── weather/            # ATIS/Weather viewer
-│   └── settings/           # App settings
-├── utils/                  # Utilities & calculators
-└── docs/                   # Documentation
+👨‍✈️ YOU: "Taxi 31 via Alpha, right downwind, Skyhawk 345"
+
+✅ AI FEEDBACK: "Great readback! Just remember to include your
+                full callsign on first transmission."
 ```
 
 ---
 
-## 🚀 Getting Started
+## 💰 Pricing
 
-### Prerequisites
+**Free Tier:**
+- 30 major US/Canada airports
+- 50 practice sessions
+- Basic scenarios (ground, tower)
 
-- Android Studio (latest version)
-- Android SDK 24+
-- Kotlin 1.9+
+**Premium: $19.99 one-time**
+- ✅ Unlimited practice sessions
+- ✅ All 20,000+ US/Canada airports
+- ✅ Advanced scenarios (approach, departure, emergencies)
+- ✅ Digital logbook with proficiency tracking
+- ✅ Export practice history for CFI review
 
-### API Keys Required
+**No subscription. No limits. Practice as much as you need.**
 
-**1. Anthropic Claude API** (Optional - for premium features)
-- Visit: https://console.anthropic.com/
-- Sign up and create API key
-- $5 free credit for new accounts
+---
 
-**2. Google Gemini API** (Recommended - has free tier!)
-- Visit: https://makersuite.google.com/app/apikey
-- Free tier: 1,500 requests/day
-- No credit card required
+## 📱 Requirements
 
-### Installation
+- Android 7.0 (API 24) or higher
+- Microphone for voice input
+- Internet connection for AI responses
+- Recommended: Headset for best experience
+
+---
+
+## 🚀 Installation
+
+### For Users (Coming Soon)
+Download from Google Play Store (link coming after beta testing)
+
+### For Developers
 
 1. **Clone the repository**
 ```bash
@@ -188,306 +106,145 @@ git clone https://github.com/hantotech/flightdeck.git
 cd flightdeck
 ```
 
-2. **Create `local.properties`** in project root
+2. **Add API keys to `local.properties`**
 ```properties
 ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
 GEMINI_API_KEY=AIzaSy-your-key-here
 ```
 
+Get your API keys:
+- **Anthropic Claude API**: https://console.anthropic.com/ ($5 free credit)
+- **Google Gemini API**: https://makersuite.google.com/app/apikey (Free tier: 1,500 requests/day)
+
 3. **Open in Android Studio**
-- File > Open > Select FlightDeck folder
+- File → Open → Select FlightDeck folder
 - Wait for Gradle sync
 
 4. **Build and Run**
 - Click Run ▶️ or press Shift+F10
 - Select emulator or physical device
 
-### Quick Start - See the Logbook!
+---
 
-The app comes with **8 pre-loaded training sessions** to demonstrate the logbook system:
+## 🎓 What You Can Practice
 
-1. Launch the app
-2. Navigate to the **Logbook** tab (📊 icon in bottom navigation)
-3. You'll see:
-   - **6 hours 45 minutes** of flight time
-   - **8 completed sessions** across 4 airports
-   - **Proficiency ratings** for 10 skill categories
-   - **Pilot rank** based on average performance
-   - **Training progression** from beginner (68%) to advanced (92%)
+### Ground Operations
+- Ground clearances with taxi instructions
+- Runway hold-short procedures
+- Progressive taxi in complex airports
 
-Sample sessions include:
-- Pattern practice at KPAO
-- Cross-country flights
-- Class C/D operations
+### Tower Operations
+- Takeoff clearances
+- Landing clearances
+- Pattern work (touch-and-go, full stop)
+- Go-arounds
+
+### Approach/Departure
+- Flight following requests
+- VFR transitions through Class B/C
+- Flight plan activations
+- Radar services
+
+### Advanced Scenarios (Premium)
+- Class B operations (complex airports)
+- Emergency communications (engine failure, lost comms)
 - Weather diversions
-- Emergency procedures training
-- Night operations
+- Multiple aircraft traffic
+
+---
+
+## 📊 Features
+
+### Voice Recognition
+- Android SpeechRecognizer with aviation terminology
+- Push-to-talk interface
+- Background noise filtering
+
+### AI-Powered ATC
+- Claude AI for intelligent, context-aware responses
+- Realistic traffic scenarios
+- Weather-appropriate instructions
+- Adapts to your skill level
+
+### Digital Logbook
+- Track all practice sessions
+- Monitor proficiency across 10 skill categories
+- Export for CFI review
+- Progress tracking over time
+
+### Airport Database
+- 30 major airports (free tier)
+- 20,000+ US/Canada airports (premium)
+- Actual runways and frequencies
+- Real-time METAR/TAF weather
+
+---
+
+## 🛠️ Technology Stack
+
+- **Language**: Kotlin
+- **Architecture**: MVVM with Repository pattern
+- **Database**: Room (SQLite)
+- **UI**: Material Design 3, View Binding
+- **Voice**: Android SpeechRecognizer + TextToSpeech
+- **AI**: Claude API (Anthropic) + Gemini API (Google)
+- **Weather**: Aviation Weather Center API
 
 ---
 
 ## 📖 Documentation
 
-Comprehensive guides available:
-
-### Setup & Architecture
-- **[Setup Guide](SETUP_GUIDE.md)** - Detailed setup instructions
-- **[API Examples](API_EXAMPLES.md)** - Code usage examples
-
-### AI System
-- **[Hybrid AI Guide](HYBRID_AI_GUIDE.md)** - AI configuration and optimization
-- **[Hybrid Summary](HYBRID_SUMMARY.md)** - Quick overview of AI system
-
-### Features & Systems
-- **[Airport & Traffic Guide](AIRPORT_TRAFFIC_GUIDE.md)** - Airport data and traffic simulation
-- **[ATIS/AWOS Guide](ATIS_GUIDE.md)** - Weather broadcast system
-
-### UI Design
-- **[UI Design - Mission Selection](UI_DESIGN_MISSION_SELECTION.md)** - Mission configuration interface
-- **[UI Design - Logbook](UI_DESIGN_LOGBOOK.md)** - Digital logbook interface
-- **[UI Design Spec](UI_DESIGN_SPEC.md)** - General UI specifications
-
-### Development
-- **[App Refinement Plan](APP_REFINEMENT_PLAN.md)** - Systematic refinement strategy
-- **[Refinement Progress](REFINEMENT_PROGRESS.md)** - Current development status
-- **[MVP Implementation Plan](MVP_IMPLEMENTATION_PLAN.md)** - Core feature roadmap
-- **[Project Status](PROJECT_STATUS.md)** - Overall progress and roadmap
+- **[PRODUCT_REFOCUS.md](PRODUCT_REFOCUS.md)** - Product strategy and ARSim competitive analysis
+- **[VOICE_IMPLEMENTATION_GUIDE.md](VOICE_IMPLEMENTATION_GUIDE.md)** - Voice integration technical details
+- **[SETUP_GUIDE.md](SETUP_GUIDE.md)** - Detailed developer setup
+- **[AIRPORT_PREMIUM_STRATEGY.md](AIRPORT_PREMIUM_STRATEGY.md)** - Two-tier airport pricing model
+- **[BRAND_GUIDELINES.md](BRAND_GUIDELINES.md)** - Design system and branding
 
 ---
 
-## 💡 Usage Examples
+## 🗺️ Roadmap
 
-### ATC Communication Practice
+### Current Status: **MVP Development** 🚧
 
-```kotlin
-// Initialize AI service
-val aiService = EnhancedAIService.getInstance(UserTier.BASIC)
+**Phase 1: Voice ATC Core (Weeks 1-2)**
+- [x] Backend architecture (MVVM, repositories, database)
+- [x] AI integration (Claude + Gemini APIs)
+- [x] Airport database (30 free + 20K premium)
+- [ ] Voice input (Android SpeechRecognizer)
+- [ ] Voice output (TextToSpeech)
+- [ ] Push-to-talk UI
+- [ ] Basic practice session flow
 
-// Practice ATC call
-val result = aiService.generateATCResponse(
-    pilotMessage = "Palo Alto Ground, Skyhawk N12345, ready to taxi",
-    context = ATCContext(
-        airport = "KPAO",
-        scenarioType = "GROUND_CLEARANCE",
-        conditions = "VFR"
-    )
-)
+**Phase 2: Core Scenarios (Week 3)**
+- [ ] Ground clearance scenarios
+- [ ] Tower operations (takeoff/landing)
+- [ ] Pattern work scenarios
+- [ ] Session feedback and scoring
 
-result.onSuccess { atcResponse ->
-    // Display: "Skyhawk N12345, Palo Alto Ground,
-    //          taxi to runway 31 via Alpha"
-}
+**Phase 3: Polish & Beta (Week 4)**
+- [ ] Digital logbook UI
+- [ ] Practice history
+- [ ] Premium purchase flow
+- [ ] Beta testing with 20+ student pilots
 
-// Get evaluation
-val evaluation = aiService.evaluateATCCommunication(...)
-// Returns score, feedback, and suggestions
-```
-
-### Interactive Checklist
-
-```kotlin
-val checklistRepo = ChecklistRepository(checklistDao, aiService)
-
-// Start session
-val sessionId = checklistRepo.startChecklistSession(aircraftId)
-
-// Get AI help
-val guidance = checklistRepo.getItemGuidance(
-    checklistItem = checklistItem,
-    aircraftType = "Cessna 172",
-    userQuestion = "Why do we check oil level?"
-)
-```
-
-### Digital Logbook & Proficiency Tracking
-
-```kotlin
-val logbookRepo = LogbookRepository(logbookDao)
-
-// Record a training session
-val entry = LogbookEntry(
-    missionName = "Pattern Work at KPAO",
-    departureAirport = "KPAO",
-    arrivalAirport = "KPAO",
-    totalTime = 45, // minutes
-    difficulty = Difficulty.BEGINNER,
-    overallScore = 85f,
-    communicationScore = 88f,
-    navigationScore = 82f
-    // ... other metrics
-)
-val entryId = logbookRepo.recordSession(entry)
-
-// Get proficiency ratings
-val ratings = logbookRepo.getAllProficiencyRatings()
-// Returns ratings for all 10 skill categories
-
-// Get pilot rank
-val rank = logbookRepo.getPilotRank()
-// Returns: Student Pilot, Private Pilot, Commercial, etc.
-
-// Get logbook totals
-val totals = logbookRepo.getTotals()
-// Total time, sessions, airports visited, streaks, etc.
-
-// Export to CSV
-val csv = logbookRepo.exportToCSV(startDate, endDate)
-```
-
-### Custom Mission Configuration
-
-```kotlin
-val missionRepo = MissionConfigRepository(missionConfigDao)
-
-// Get preset missions
-val presets = missionRepo.getAllPresets()
-// Returns 10 presets from "First Solo" to "Total Emergency"
-
-// Create custom mission
-val customMission = MissionConfig(
-    name = "My Custom Challenge",
-    baseDifficulty = Difficulty.INTERMEDIATE,
-    trafficDensity = TrafficDensity.BUSY,
-    weatherComplexity = WeatherComplexity.CHALLENGING,
-    selectedChallenges = "RAPID_FREQUENCY_CHANGES,WIND_SHEAR"
-)
-
-// Validate configuration
-val validation = missionRepo.validateConfig(customMission)
-if (validation.isValid) {
-    missionRepo.create(customMission)
-}
-```
-
----
-
-## 💰 Pricing Tiers
-
-### Free Tier
-- 10 AI interactions/day
-- Gemini Flash only
-- Basic features
-- **$0/month**
-
-### Basic Tier
-- 100 AI interactions/month
-- Hybrid routing (all models)
-- All features
-- **$4.99/month** (suggested)
-
-### Premium Tier
-- Unlimited interactions
-- Best models (Claude Sonnet priority)
-- Priority support
-- **$9.99/month** (suggested)
-
----
-
-## 📊 Cost Analysis
-
-### AI Costs per User (Monthly)
-
-| User Type | Interactions | AI Cost | Revenue | Profit |
-|-----------|-------------|---------|---------|--------|
-| Free | 300 | $0 | $0 | $0 |
-| Basic | 100 | $2-3 | $4.99 | $2-3 |
-| Premium | 500 | $5-8 | $9.99 | $2-5 |
-
-**70% cost savings** vs. using Claude Sonnet exclusively
-
----
-
-## 🛠️ Development Roadmap
-
-### ✅ Phase 1: Backend (COMPLETE - 100%)
-- [x] Data models (25+ entities)
-- [x] Room database (23 entities, comprehensive DAOs)
-- [x] AI integration (Claude + Gemini)
-- [x] Smart routing orchestrator
-- [x] Weather API integration
-- [x] Knowledge base (RAG with FAR/AIM)
-- [x] Airport database system (5 airports, runways, frequencies)
-- [x] Traffic simulation engine
-- [x] Repository layer (6 repositories)
-- [x] **Dependency injection system** ✨
-- [x] **Digital logbook system** ✨
-- [x] **Mission configuration system** ✨
-- [x] **Proficiency tracking algorithm** ✨
-- [x] **Sample data initialization** ✨
-- [x] Documentation (12 comprehensive guides)
-
-### 🚧 Phase 2: UI (In Progress - 50%)
-- [x] Navigation structure (Bottom nav with 5 tabs)
-- [x] **Digital Logbook screen** ✨
-- [x] Home/Dashboard (basic)
-- [x] ATC Simulator (chat interface)
-- [x] Weather/ATIS viewer (functional)
-- [x] Settings screen (basic)
-- [ ] Mission Selection screen (designed, not built)
-- [ ] Session Detail screen
-- [ ] Proficiency Detail screen
-- [ ] Analytics Dashboard
-- [ ] Enhanced checklist screen
-
-### 📅 Phase 3: Feature Enhancement
-- [ ] RecyclerViews for logbook entries
-- [ ] Mission builder with challenge selection
-- [ ] Real-time mission scoring
-- [ ] Export functionality (CSV/PDF)
-- [ ] Voice input for ATC
-- [ ] Text-to-speech for ATC responses
-- [ ] Offline mode
-- [ ] Multi-aircraft support
-- [ ] IFR scenarios
-- [ ] Flight school integration
-
-### 🚀 Phase 4: Polish & Launch
-- [ ] Professional color palette
-- [ ] Loading states and animations
-- [ ] Error handling improvements
-- [ ] Beta testing with pilots
-- [ ] CFI review and feedback
+**Phase 4: Launch (Week 5-6)**
 - [ ] Google Play Store submission
 - [ ] Marketing materials
-
-**Current Status**: ~50% complete | **Latest**: Sample data & build success! 🎉
+- [ ] Flight school outreach
+- [ ] Public launch
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! This project is actively developed.
 
-### Development Setup
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- **FAA** - For publicly available regulations and guidance
-- **Anthropic** - Claude API for intelligent responses
-- **Google** - Gemini API with generous free tier
-- **Aviation Weather Center** - Real-time weather data
-- **OurAirports** - Public domain airport database
-
----
-
-## 📞 Contact & Support
-
-- **GitHub Issues**: [Report bugs or request features](https://github.com/hantotech/flightdeck/issues)
-- **Email**: [Your email]
-- **Website**: [Your website]
+### Areas Where We Need Help:
+- Voice recognition accuracy improvements
+- Aviation phraseology validation (CFI input)
+- UI/UX testing with real pilots
+- Additional airport data
+- Scenario testing
 
 ---
 
@@ -501,33 +258,50 @@ The aviation information provided is for educational purposes and may not reflec
 
 ---
 
-## 🎓 For Flight Schools
+## 📄 License
 
-Interested in a custom-branded version for your flight school?
-
-**Features for flight schools:**
-- White-label branding
-- Custom checklists for your fleet
-- Student progress tracking
-- CFI dashboard
-- Site license pricing
-
-Contact us for more information.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## ⭐ Star History
+## 🙏 Acknowledgments
 
-If you find FlightDeck useful, please consider giving it a star! ⭐
+- **FAA** - For publicly available regulations and guidance
+- **Anthropic** - Claude API for intelligent AI responses
+- **Google** - Gemini API with generous free tier
+- **Aviation Weather Center** - Real-time METAR/TAF data
+- **OurAirports** - Public domain airport database
+
+---
+
+## 📞 Contact & Feedback
+
+Found a bug? Have a suggestion? Want to help beta test?
+
+- **GitHub Issues**: [Report bugs or request features](https://github.com/hantotech/flightdeck/issues)
+- **Email**: [Your email here]
+
+---
+
+## 🎯 For Flight Schools
+
+Interested in FlightDeck for your students?
+
+**Benefits:**
+- Reduce CFI time spent on radio communication basics
+- Students arrive prepared for radio work
+- Track student progress across your school
+- Site license pricing available
+
+Contact us for flight school partnerships.
 
 ---
 
 <p align="center">
   <b>Built with ❤️ for the aviation community</b><br>
-  <sub>Helping pilots achieve their dreams, one checklist at a time</sub>
+  <sub>Helping pilots master radio communication, one call at a time</sub>
 </p>
 
 <p align="center">
-  🤖 <i>Generated with <a href="https://claude.com/claude-code">Claude Code</a></i><br>
-  <sub>Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;</sub>
+  <i>"Practice YOUR flight before you fly it"</i>
 </p>

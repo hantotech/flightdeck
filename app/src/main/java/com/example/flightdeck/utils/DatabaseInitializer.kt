@@ -6,7 +6,24 @@ import com.example.flightdeck.data.knowledge.AviationDocument
 import com.example.flightdeck.data.knowledge.AviationKnowledge
 import com.example.flightdeck.data.knowledge.FARContent
 import com.example.flightdeck.data.local.FlightDeckDatabase
-import com.example.flightdeck.data.model.*
+import com.example.flightdeck.data.model.Airport
+import com.example.flightdeck.data.model.AirspaceClass
+import com.example.flightdeck.data.model.AirportType
+import com.example.flightdeck.data.model.Runway
+import com.example.flightdeck.data.model.SurfaceType
+import com.example.flightdeck.data.model.Frequency
+import com.example.flightdeck.data.model.FrequencyType
+import com.example.flightdeck.data.model.ATCScenario
+import com.example.flightdeck.data.model.ATCScenarioType
+import com.example.flightdeck.data.model.Difficulty
+import com.example.flightdeck.data.model.LogbookEntry
+import com.example.flightdeck.data.model.TrafficDensity
+import com.example.flightdeck.data.model.WeatherComplexity
+import com.example.flightdeck.data.model.ProficiencyRating
+import com.example.flightdeck.data.model.SkillCategory
+import com.example.flightdeck.data.model.ProficiencyLevel
+import com.example.flightdeck.data.model.TrendDirection
+import com.example.flightdeck.data.model.LogbookTotals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -27,11 +44,10 @@ object DatabaseInitializer {
             return@withContext
         }
 
-        // Initialize each table
+        // Initialize tables for voice ATC focus
         initializeAirports(db)
         initializeKnowledgeBase(db)
         initializeATCScenarios(db)
-        initializeAircraft(db)
         initializeLogbookData(db)
     }
 
@@ -682,48 +698,6 @@ object DatabaseInitializer {
     /**
      * Initialize sample aircraft
      */
-    private suspend fun initializeAircraft(db: FlightDeckDatabase) {
-        val aircraftDao = db.aircraftDao()
-
-        val aircraft = listOf(
-            Aircraft(
-                make = "Cessna",
-                model = "172S Skyhawk",
-                registration = "N12345",
-                category = AircraftCategory.SINGLE_ENGINE_LAND,
-                cruiseSpeed = 122,
-                fuelCapacity = 56.0,
-                fuelBurnRate = 8.5,
-                homeAirport = "KPAO",
-                notes = "Standard trainer aircraft"
-            ),
-            Aircraft(
-                make = "Piper",
-                model = "PA-28-181 Archer III",
-                registration = "N98765",
-                category = AircraftCategory.SINGLE_ENGINE_LAND,
-                cruiseSpeed = 128,
-                fuelCapacity = 50.0,
-                fuelBurnRate = 9.0,
-                homeAirport = "KPAO",
-                notes = "Primary trainer"
-            ),
-            Aircraft(
-                make = "Cirrus",
-                model = "SR22",
-                registration = "N42SR",
-                category = AircraftCategory.SINGLE_ENGINE_LAND,
-                cruiseSpeed = 183,
-                fuelCapacity = 92.0,
-                fuelBurnRate = 17.0,
-                homeAirport = "KPAO",
-                notes = "Advanced trainer with glass cockpit"
-            )
-        )
-
-        aircraft.forEach { aircraftDao.insertAircraft(it) }
-    }
-
     /**
      * Initialize logbook with sample training sessions
      * Creates realistic progression from student pilot to intermediate level
@@ -739,9 +713,7 @@ object DatabaseInitializer {
         val entries = listOf(
             // Entry 1: First training session - 30 days ago
             LogbookEntry(
-                missionConfigId = null,
                 missionName = "First Solo Pattern Practice",
-                flightPlanId = null,
                 departureAirport = "KPAO",
                 arrivalAirport = "KPAO",
                 route = "Traffic Pattern",
@@ -753,7 +725,7 @@ object DatabaseInitializer {
                 startTime = now - (30 * dayMs),
                 endTime = now - (30 * dayMs) + (45 * 60 * 1000),
                 difficulty = Difficulty.BEGINNER,
-                challengesCompleted = "",
+                scenarioType = "PATTERN_PRACTICE",
                 trafficDensity = TrafficDensity.LIGHT,
                 weatherComplexity = WeatherComplexity.CLEAR_CALM,
                 overallScore = 68f,
@@ -779,9 +751,7 @@ object DatabaseInitializer {
 
             // Entry 2: Cross-country planning - 25 days ago
             LogbookEntry(
-                missionConfigId = null,
                 missionName = "PAO to SQL Cross-Country",
-                flightPlanId = null,
                 departureAirport = "KPAO",
                 arrivalAirport = "KSQL",
                 route = "Direct",
@@ -793,7 +763,7 @@ object DatabaseInitializer {
                 startTime = now - (25 * dayMs),
                 endTime = now - (25 * dayMs) + (35 * 60 * 1000),
                 difficulty = Difficulty.BEGINNER,
-                challengesCompleted = "",
+                scenarioType = "CROSS_COUNTRY",
                 trafficDensity = TrafficDensity.MODERATE,
                 weatherComplexity = WeatherComplexity.TYPICAL_VFR,
                 overallScore = 72f,
@@ -819,9 +789,7 @@ object DatabaseInitializer {
 
             // Entry 3: Class D operations - 20 days ago
             LogbookEntry(
-                missionConfigId = null,
                 missionName = "Tower Communication Practice",
-                flightPlanId = null,
                 departureAirport = "KSQL",
                 arrivalAirport = "KSQL",
                 route = "Traffic Pattern",
@@ -833,7 +801,7 @@ object DatabaseInitializer {
                 startTime = now - (20 * dayMs),
                 endTime = now - (20 * dayMs) + (50 * 60 * 1000),
                 difficulty = Difficulty.INTERMEDIATE,
-                challengesCompleted = "RAPID_FREQUENCY_CHANGES",
+                scenarioType = "TOWER_COMMUNICATION",
                 trafficDensity = TrafficDensity.BUSY,
                 weatherComplexity = WeatherComplexity.TYPICAL_VFR,
                 overallScore = 75f,
@@ -859,9 +827,7 @@ object DatabaseInitializer {
 
             // Entry 4: Weather decision making - 15 days ago
             LogbookEntry(
-                missionConfigId = null,
                 missionName = "Weather Diversion Challenge",
-                flightPlanId = null,
                 departureAirport = "KPAO",
                 arrivalAirport = "KHAF",
                 route = "Direct with diversion",
@@ -873,7 +839,7 @@ object DatabaseInitializer {
                 startTime = now - (15 * dayMs),
                 endTime = now - (15 * dayMs) + (55 * 60 * 1000),
                 difficulty = Difficulty.INTERMEDIATE,
-                challengesCompleted = "COASTAL_FOG_BANK,PIREP_ANALYSIS",
+                scenarioType = "WEATHER_DIVERSION",
                 trafficDensity = TrafficDensity.LIGHT,
                 weatherComplexity = WeatherComplexity.CHALLENGING,
                 overallScore = 82f,
@@ -899,9 +865,7 @@ object DatabaseInitializer {
 
             // Entry 5: Class C operations - 12 days ago
             LogbookEntry(
-                missionConfigId = null,
                 missionName = "Class C Clearance Practice",
-                flightPlanId = null,
                 departureAirport = "KPAO",
                 arrivalAirport = "KSJC",
                 route = "Direct",
@@ -913,7 +877,7 @@ object DatabaseInitializer {
                 startTime = now - (12 * dayMs),
                 endTime = now - (12 * dayMs) + (40 * 60 * 1000),
                 difficulty = Difficulty.INTERMEDIATE,
-                challengesCompleted = "BUSY_CLASS_C",
+                scenarioType = "CLASS_C_OPERATIONS",
                 trafficDensity = TrafficDensity.BUSY,
                 weatherComplexity = WeatherComplexity.TYPICAL_VFR,
                 overallScore = 85f,
@@ -939,9 +903,7 @@ object DatabaseInitializer {
 
             // Entry 6: Emergency procedures - 8 days ago
             LogbookEntry(
-                missionConfigId = null,
                 missionName = "Emergency Procedures Training",
-                flightPlanId = null,
                 departureAirport = "KPAO",
                 arrivalAirport = "KPAO",
                 route = "Local area",
@@ -953,7 +915,7 @@ object DatabaseInitializer {
                 startTime = now - (8 * dayMs),
                 endTime = now - (8 * dayMs) + (60 * 60 * 1000),
                 difficulty = Difficulty.ADVANCED,
-                challengesCompleted = "ENGINE_ROUGHNESS,ELECTRICAL_FAILURE",
+                scenarioType = "EMERGENCY_PROCEDURES",
                 trafficDensity = TrafficDensity.MODERATE,
                 weatherComplexity = WeatherComplexity.TYPICAL_VFR,
                 overallScore = 78f,
@@ -979,9 +941,7 @@ object DatabaseInitializer {
 
             // Entry 7: Night operations - 5 days ago
             LogbookEntry(
-                missionConfigId = null,
                 missionName = "Night Pattern Work",
-                flightPlanId = null,
                 departureAirport = "KPAO",
                 arrivalAirport = "KPAO",
                 route = "Traffic Pattern",
@@ -993,7 +953,7 @@ object DatabaseInitializer {
                 startTime = now - (5 * dayMs),
                 endTime = now - (5 * dayMs) + (45 * 60 * 1000),
                 difficulty = Difficulty.INTERMEDIATE,
-                challengesCompleted = "NIGHT_OPERATIONS",
+                scenarioType = "NIGHT_OPERATIONS",
                 trafficDensity = TrafficDensity.LIGHT,
                 weatherComplexity = WeatherComplexity.TYPICAL_VFR,
                 overallScore = 88f,
@@ -1019,9 +979,7 @@ object DatabaseInitializer {
 
             // Entry 8: Complex cross-country - 2 days ago
             LogbookEntry(
-                missionConfigId = null,
                 missionName = "Complex Cross-Country",
-                flightPlanId = null,
                 departureAirport = "KPAO",
                 arrivalAirport = "KSFO",
                 route = "Via KHAF, coastal route",
@@ -1033,7 +991,7 @@ object DatabaseInitializer {
                 startTime = now - (2 * dayMs),
                 endTime = now - (2 * dayMs) + (75 * 60 * 1000),
                 difficulty = Difficulty.ADVANCED,
-                challengesCompleted = "BUSY_CLASS_B,WIND_SHEAR,PIREP_ANALYSIS",
+                scenarioType = "CLASS_B_OPERATIONS",
                 trafficDensity = TrafficDensity.CONGESTED,
                 weatherComplexity = WeatherComplexity.CHALLENGING,
                 overallScore = 92f,

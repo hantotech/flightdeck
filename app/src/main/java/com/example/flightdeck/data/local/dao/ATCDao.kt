@@ -1,7 +1,12 @@
 package com.example.flightdeck.data.local.dao
 
 import androidx.room.*
-import com.example.flightdeck.data.model.*
+import com.example.flightdeck.data.model.ATCScenario
+import com.example.flightdeck.data.model.ATCScenarioType
+import com.example.flightdeck.data.model.Difficulty
+import com.example.flightdeck.data.model.ATCExchange
+import com.example.flightdeck.data.model.ATCPracticeSession
+import com.example.flightdeck.data.model.ATCResponse
 import kotlinx.coroutines.flow.Flow
 
 @Dao

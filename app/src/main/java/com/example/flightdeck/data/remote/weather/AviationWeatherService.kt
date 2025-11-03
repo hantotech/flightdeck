@@ -1,6 +1,11 @@
 package com.example.flightdeck.data.remote.weather
 
-import com.example.flightdeck.data.model.*
+import com.example.flightdeck.data.model.WeatherReport
+import com.example.flightdeck.data.model.ForecastReport
+import com.example.flightdeck.data.model.FlightCategory
+import com.example.flightdeck.data.model.SkyCondition
+import com.example.flightdeck.data.model.SkyCoverage
+import com.example.flightdeck.data.model.PeriodForecast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient

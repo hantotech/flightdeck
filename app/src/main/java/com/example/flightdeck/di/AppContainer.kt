@@ -15,17 +15,20 @@ class AppContainer(context: Context) {
         FlightDeckDatabase.getDatabase(context)
     }
 
-    // Repositories
+    // Repositories (Voice ATC Focus)
     val logbookRepository: LogbookRepository by lazy {
         LogbookRepository(database.logbookDao())
     }
 
-    val missionConfigRepository: MissionConfigRepository by lazy {
-        MissionConfigRepository(database.missionConfigDao())
-    }
-
     val airportRepository: AirportRepository by lazy {
         AirportRepository(database.airportDao())
+    }
+
+    val atisRepository: ATISRepository by lazy {
+        ATISRepository(
+            atisDao = database.atisDao(),
+            airportRepository = airportRepository
+        )
     }
 
     val trafficSimulator: TrafficSimulator by lazy {
@@ -35,10 +38,6 @@ class AppContainer(context: Context) {
         )
     }
 
-    val checklistRepository: ChecklistRepository by lazy {
-        ChecklistRepository(checklistDao = database.checklistDao())
-    }
-
     val atcRepository: ATCRepository by lazy {
         ATCRepository(
             atcDao = database.atcDao(),
@@ -46,14 +45,4 @@ class AppContainer(context: Context) {
             trafficSimulator = trafficSimulator
         )
     }
-
-    val flightPlanRepository: FlightPlanRepository by lazy {
-        FlightPlanRepository(flightPlanDao = database.flightPlanDao())
-    }
-
-    // TODO: Add other repositories as needed
-    // - WeatherRepository
-    // - AircraftRepository
-    // - PerformanceRepository
-    // - KnowledgeRepository
 }

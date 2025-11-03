@@ -13,10 +13,8 @@ data class LogbookEntry(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
 
-    // Mission/Flight Information
-    val missionConfigId: Long?,
-    val missionName: String,
-    val flightPlanId: Long?,
+    // ATC Practice Session Information
+    val missionName: String, // e.g., "Ground Clearance Practice at KPAO"
 
     // Route Information
     val departureAirport: String, // ICAO
@@ -36,7 +34,7 @@ data class LogbookEntry(
 
     // Difficulty & Configuration
     val difficulty: Difficulty,
-    val challengesCompleted: String = "", // Comma-separated ChallengeModule names
+    val scenarioType: String = "GROUND_CLEARANCE", // e.g., GROUND_CLEARANCE, TAKEOFF, LANDING
     val trafficDensity: TrafficDensity = TrafficDensity.MODERATE,
     val weatherComplexity: WeatherComplexity = WeatherComplexity.TYPICAL_VFR,
 
@@ -110,7 +108,7 @@ data class ProficiencyRating(
 
     // Recommendations
     val needsImprovement: Boolean = false,
-    val recommendedChallenges: String = "", // Comma-separated ChallengeModule names
+    val recommendedChallenges: String = "",
     val cfiFeedback: String? = null
 )
 
@@ -169,6 +167,8 @@ enum class SkillCategory(val displayName: String, val icon: String, val descript
         "Fuel planning, monitoring, and reserve management"
     );
 
+    // TODO: Uncomment when implementing challenge system (Phase 2)
+    /*
     companion object {
         fun fromChallengeModule(challenge: ChallengeModule): List<SkillCategory> {
             return when (challenge.category) {
@@ -203,6 +203,7 @@ enum class SkillCategory(val displayName: String, val icon: String, val descript
             }
         }
     }
+    */
 }
 
 /**
@@ -334,14 +335,14 @@ data class LogbookPeriodSummary(
     val difficultiesAttempted: Map<Difficulty, Int>
 )
 
+// TODO: Uncomment and update when implementing export (Phase 2)
+/*
 /**
  * Export format for logbook data
  */
 data class LogbookExportData(
     val generatedDate: Long = System.currentTimeMillis(),
-    val totals: LogbookTotals,
     val entries: List<LogbookEntry>,
-    val proficiencyRatings: List<ProficiencyRating>,
     val periodSummaries: List<LogbookPeriodSummary>,
     val userInfo: UserExportInfo
 )
@@ -357,6 +358,7 @@ data class UserExportInfo(
     val currentRank: String, // Based on proficiency
     val joinDate: Long
 )
+*/
 
 /**
  * Helper extensions for LogbookEntry
@@ -365,11 +367,14 @@ fun LogbookEntry.getDurationMinutes(): Int {
     return ((endTime - startTime) / 60000).toInt()
 }
 
+// TODO: Uncomment when implementing challenge system (Phase 2)
+/*
 fun LogbookEntry.getChallengesList(): List<ChallengeModule> {
     if (challengesCompleted.isEmpty()) return emptyList()
     return challengesCompleted.split(",")
         .mapNotNull { ChallengeModule.fromString(it.trim()) }
 }
+*/
 
 fun LogbookEntry.getAreasForImprovementList(): List<SkillCategory> {
     if (areasForImprovement.isEmpty()) return emptyList()

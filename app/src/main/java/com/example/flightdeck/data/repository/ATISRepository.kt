@@ -1,7 +1,13 @@
 package com.example.flightdeck.data.repository
 
 import com.example.flightdeck.data.local.dao.ATISDao
-import com.example.flightdeck.data.model.*
+import com.example.flightdeck.data.model.ATISBroadcast
+import com.example.flightdeck.data.model.BroadcastType
+import com.example.flightdeck.data.model.ATISGenerator
+import com.example.flightdeck.data.model.SampleATISGenerator
+import com.example.flightdeck.data.model.Runway
+import com.example.flightdeck.data.model.ATISInformationCode
+import com.example.flightdeck.data.model.WeatherReport
 import com.example.flightdeck.data.remote.weather.AviationWeatherService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.flightdeck.data.model.*
+import com.example.flightdeck.data.model.LogbookTotals
+import com.example.flightdeck.data.model.LogbookEntry
+import com.example.flightdeck.data.model.ProficiencyRating
 import com.example.flightdeck.data.repository.LogbookRepository
 import com.example.flightdeck.utils.PilotRank
 import kotlinx.coroutines.launch

@@ -1,7 +1,15 @@
 package com.example.flightdeck.data.local.dao
 
 import androidx.room.*
-import com.example.flightdeck.data.model.*
+import com.example.flightdeck.data.model.LogbookEntry
+import com.example.flightdeck.data.model.Difficulty
+import com.example.flightdeck.data.model.ProficiencyRating
+import com.example.flightdeck.data.model.SkillCategory
+import com.example.flightdeck.data.model.ProficiencyLevel
+import com.example.flightdeck.data.model.TrendDirection
+import com.example.flightdeck.data.model.LogbookTotals
+import com.example.flightdeck.data.model.DifficultyCount
+import com.example.flightdeck.data.model.DailyScore
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -72,8 +80,9 @@ interface LogbookDao {
     @Query("SELECT * FROM logbook_entries WHERE isCertified = 1 ORDER BY certificationDate DESC")
     suspend fun getCertifiedEntries(): List<LogbookEntry>
 
-    @Query("SELECT * FROM logbook_entries WHERE challengesCompleted != '' ORDER BY date DESC")
-    suspend fun getEntriesWithChallenges(): List<LogbookEntry>
+    // TODO: Update query when implementing challenge system
+    // @Query("SELECT * FROM logbook_entries WHERE scenarioType != '' ORDER BY date DESC")
+    // suspend fun getEntriesWithScenarios(): List<LogbookEntry>
 
     // ========================================
     // Statistics Queries

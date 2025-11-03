@@ -2,7 +2,11 @@ package com.example.flightdeck.data.repository
 
 import com.example.flightdeck.data.local.dao.AirportDao
 import com.example.flightdeck.data.local.dao.CompleteAirportData
-import com.example.flightdeck.data.model.*
+import com.example.flightdeck.data.model.Airport
+import com.example.flightdeck.data.model.AirportType
+import com.example.flightdeck.data.model.Runway
+import com.example.flightdeck.data.model.Frequency
+import com.example.flightdeck.data.model.FrequencyType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
