@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flightdeck.data.model.ATCScenario
+import com.example.flightdeck.data.model.FrequencyType
 import com.example.flightdeck.data.model.TrafficPosition
 import com.example.flightdeck.data.repository.ATCRepository
 import kotlinx.coroutines.flow.first
@@ -88,6 +89,106 @@ class ATCViewModel(private val atcRepo: ATCRepository) : ViewModel() {
                 _error.value = null
             } catch (e: Exception) {
                 _error.value = "Failed to start scenario: ${e.message}"
+            }
+        }
+    }
+
+    /**
+     * Start a custom practice session with departure and arrival airports
+     * Creates a dynamic scenario based on the flight route
+     */
+    fun startCustomSession(departureIcao: String, arrivalIcao: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+
+                // End current session if exists
+                currentSessionId?.let { sessionId ->
+                    atcRepo.endPracticeSession(sessionId, 0f, 0f)
+                }
+
+                // Get airport information
+                val departureResult = atcRepo.getAirportInfo(departureIcao)
+                val arrivalResult = atcRepo.getAirportInfo(arrivalIcao)
+
+                // Create a custom scenario for this flight
+                val departureAirport = departureResult.getOrNull()?.airport
+                val arrivalAirport = arrivalResult.getOrNull()?.airport
+
+                val scenarioTitle = "$departureIcao → $arrivalIcao Practice"
+                val scenarioDescription = buildString {
+                    append("VFR flight from ")
+                    append(departureAirport?.name ?: departureIcao)
+                    append(" to ")
+                    append(arrivalAirport?.name ?: arrivalIcao)
+                    if (departureAirport != null) {
+                        append(". Field elevation: ${departureAirport.elevation}ft")
+                    }
+                }
+
+                // Create temporary scenario (we'll use the first available scenario ID as placeholder)
+                val scenarios = atcRepo.getAllScenarios().first()
+                val baseScenario = scenarios.firstOrNull() ?: run {
+                    _error.value = "No scenarios available. Please initialize sample scenarios."
+                    _isLoading.value = false
+                    return@launch
+                }
+
+                // Start session with base scenario
+                currentSessionId = atcRepo.startPracticeSession(baseScenario.id)
+
+                // Override scenario details for custom flight
+                _currentScenario.value = baseScenario.copy(
+                    title = scenarioTitle,
+                    airport = departureIcao,
+                    situation = scenarioDescription
+                )
+
+                // Get frequency information for departure airport
+                val frequencies = atcRepo.getFrequencies(departureIcao)
+                val groundFreq = frequencies.firstOrNull { it.type == FrequencyType.GROUND }
+                val towerFreq = frequencies.firstOrNull { it.type == FrequencyType.TOWER }
+
+                // Build initial ATC greeting
+                val initialGreeting = buildString {
+                    append("Welcome to ")
+                    append(departureAirport?.name ?: departureIcao)
+                    append(". ")
+                    if (groundFreq != null) {
+                        append("Ground frequency ${groundFreq.frequency}. ")
+                    }
+                    if (towerFreq != null) {
+                        append("Tower ${towerFreq.frequency}. ")
+                    }
+                    append("Ready for your radio call.")
+                }
+
+                // Set up initial messages
+                _messages.value = listOf(
+                    ChatMessage(
+                        text = "Practice Session: $scenarioTitle",
+                        type = MessageType.SYSTEM
+                    ),
+                    ChatMessage(
+                        text = scenarioDescription,
+                        type = MessageType.SYSTEM
+                    ),
+                    ChatMessage(
+                        text = initialGreeting,
+                        type = MessageType.ATC
+                    ),
+                    ChatMessage(
+                        text = "Press and hold the PTT button to begin your radio call...",
+                        type = MessageType.SYSTEM
+                    )
+                )
+
+                _error.value = null
+                _isLoading.value = false
+
+            } catch (e: Exception) {
+                _isLoading.value = false
+                _error.value = "Failed to start session: ${e.message}"
             }
         }
     }

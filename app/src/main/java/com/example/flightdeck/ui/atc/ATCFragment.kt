@@ -15,9 +15,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.flightdeck.FlightDeckApplication
 import com.example.flightdeck.R
 import com.example.flightdeck.databinding.FragmentAtcBinding
 import com.example.flightdeck.data.model.ATCScenario
+import com.example.flightdeck.di.ViewModelFactory
 import com.example.flightdeck.utils.VoiceInputManager
 import com.example.flightdeck.utils.VoiceOutputManager
 import com.example.flightdeck.utils.VoiceResult
@@ -33,7 +35,10 @@ class ATCFragment : Fragment() {
     private var _binding: FragmentAtcBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ATCViewModel by viewModels()
+    private val viewModel: ATCViewModel by viewModels {
+        val app = requireActivity().application as FlightDeckApplication
+        ViewModelFactory(app.appContainer)
+    }
     private lateinit var chatAdapter: ChatMessageAdapter
 
     // Voice managers
@@ -187,15 +192,12 @@ class ATCFragment : Fragment() {
 
         // Update session info
         binding.sessionTitle.text = "$departure → $arrival"
-        binding.sessionInfo.text = "Session starting..."
+        binding.sessionInfo.text = "Initializing session..."
 
-        // TODO: Call ViewModel to initialize practice session with AI
-        // For now, just show a welcome message
+        // Initialize practice session with ViewModel
+        viewModel.startCustomSession(departure, arrival)
+
         Toast.makeText(requireContext(), "Practice session started: $departure to $arrival", Toast.LENGTH_SHORT).show()
-
-        // Send initial ATC greeting (simulated)
-        val greeting = "$departure Ground, frequency 121.9 active."
-        voiceOutputManager?.speak(greeting)
     }
 
     private fun startVoiceInput() {
@@ -270,6 +272,14 @@ class ATCFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        // Current scenario
+        viewModel.currentScenario.observe(viewLifecycleOwner) { scenario ->
+            scenario?.let {
+                binding.sessionTitle.text = it.title
+                binding.sessionInfo.text = it.situation
+            }
+        }
+
         // Messages
         viewModel.messages.observe(viewLifecycleOwner) { messages ->
             chatAdapter.submitList(messages) {
