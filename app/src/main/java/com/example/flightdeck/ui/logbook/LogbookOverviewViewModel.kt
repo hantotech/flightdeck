@@ -8,7 +8,7 @@ import com.example.flightdeck.data.model.LogbookTotals
 import com.example.flightdeck.data.model.LogbookEntry
 import com.example.flightdeck.data.model.ProficiencyRating
 import com.example.flightdeck.data.repository.LogbookRepository
-import com.example.flightdeck.utils.PilotRank
+import com.example.flightdeck.data.model.PilotRank
 import kotlinx.coroutines.launch
 
 /**
@@ -63,8 +63,8 @@ class LogbookOverviewViewModel(
                 _totals.value = totals
 
                 // Load pilot rank
-                val rank = logbookRepository.getPilotRank()
-                _pilotRank.value = rank
+                // TODO Phase 2: Re-implement getPilotRank() in LogbookRepository
+                _pilotRank.value = PilotRank.STUDENT_PILOT
 
                 // Load recent entries
                 val entries = logbookRepository.getRecentEntries(5)

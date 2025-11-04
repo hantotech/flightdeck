@@ -9,10 +9,9 @@ import com.example.flightdeck.data.model.TrafficDensity
 import com.example.flightdeck.data.model.ATCResponse
 import com.example.flightdeck.data.model.TrafficPosition
 import com.example.flightdeck.data.model.TrafficGenerator
-import com.example.flightdeck.data.remote.ai.EnhancedAIService
+import com.example.flightdeck.data.remote.ai.AIService
 import com.example.flightdeck.data.remote.ai.ATCContext
 import com.example.flightdeck.data.remote.ai.ATCEvaluation
-import com.example.flightdeck.data.remote.ai.UserTier
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -24,7 +23,7 @@ class ATCRepository(
     private val atcDao: ATCDao,
     private val airportRepository: AirportRepository,
     private val trafficSimulator: TrafficSimulator,
-    private val aiService: EnhancedAIService = EnhancedAIService.getInstance()
+    private val aiService: AIService = AIService()
 ) {
 
     // Scenario Management

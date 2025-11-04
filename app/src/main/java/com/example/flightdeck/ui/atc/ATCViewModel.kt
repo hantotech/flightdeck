@@ -1,16 +1,12 @@
 package com.example.flightdeck.ui.atc
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.flightdeck.data.local.FlightDeckDatabase
 import com.example.flightdeck.data.model.ATCScenario
 import com.example.flightdeck.data.model.TrafficPosition
 import com.example.flightdeck.data.repository.ATCRepository
-import com.example.flightdeck.data.repository.AirportRepository
-import com.example.flightdeck.data.repository.TrafficSimulator
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -18,12 +14,7 @@ import kotlinx.coroutines.launch
  * ViewModel for ATC Simulator
  * Manages scenarios, chat messages, and AI interactions
  */
-class ATCViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val db = FlightDeckDatabase.getDatabase(application)
-    private val airportRepo = AirportRepository.getInstance(db.airportDao())
-    private val trafficSimulator = TrafficSimulator.getInstance(db.trafficDao(), airportRepo)
-    private val atcRepo = ATCRepository(db.atcDao(), airportRepo, trafficSimulator)
+class ATCViewModel(private val atcRepo: ATCRepository) : ViewModel() {
 
     // Current scenario
     private val _currentScenario = MutableLiveData<ATCScenario?>()

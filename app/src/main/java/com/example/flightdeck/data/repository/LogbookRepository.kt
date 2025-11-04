@@ -10,12 +10,14 @@ import com.example.flightdeck.data.model.LogbookSessionSummary
 import com.example.flightdeck.data.model.SessionSkillBreakdown
 import com.example.flightdeck.data.model.ProficiencyLevel
 import com.example.flightdeck.data.model.LogbookPeriodSummary
-import com.example.flightdeck.data.model.LogbookExportData
-import com.example.flightdeck.data.model.UserExportInfo
+// TODO Phase 2: Uncomment when implementing export
+// import com.example.flightdeck.data.model.LogbookExportData
+// import com.example.flightdeck.data.model.UserExportInfo
 import com.example.flightdeck.data.model.toFlightHours
 import com.example.flightdeck.data.model.getFormattedDate
-import com.example.flightdeck.utils.ProficiencyCalculator
-import com.example.flightdeck.utils.PilotRank
+// TODO Phase 2: Uncomment when implementing proficiency calculator
+// import com.example.flightdeck.utils.ProficiencyCalculator
+import com.example.flightdeck.data.model.PilotRank
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
@@ -141,8 +143,11 @@ class LogbookRepository(
 
     /**
      * Update proficiency ratings based on a new session
+     * TODO Phase 2: Implement ProficiencyCalculator for skill score calculation
      */
     private suspend fun updateProficiencies(entry: LogbookEntry) {
+        // TODO Phase 2: Re-implement when ProficiencyCalculator is created
+        /*
         val skillScores = ProficiencyCalculator.calculateSkillScores(entry)
 
         skillScores.forEach { (category, score) ->
@@ -165,6 +170,7 @@ class LogbookRepository(
                 logbookDao.updateProficiencyRating(updatedProficiency)
             }
         }
+        */
     }
 
     // ========================================
@@ -276,8 +282,12 @@ class LogbookRepository(
     // Analytics & Statistics
     // ========================================
 
+    // TODO Phase 2: Re-implement when ProficiencyCalculator is created
     suspend fun getSessionSummary(entryId: Long): LogbookSessionSummary? {
         val entry = getEntry(entryId) ?: return null
+        // TODO: Implement ProficiencyCalculator.calculateSkillScores
+        return null
+        /*
         val skillScores = ProficiencyCalculator.calculateSkillScores(entry)
 
         val skillBreakdowns = skillScores.map { (category, score) ->
@@ -325,6 +335,7 @@ class LogbookRepository(
             areasNeedingWork = areasNeedingWork,
             comparisonToAverage = comparisonToAverage
         )
+        */
     }
 
     suspend fun getPeriodSummary(startDate: Long, endDate: Long): LogbookPeriodSummary {
@@ -379,10 +390,10 @@ class LogbookRepository(
         )
     }
 
+    // TODO Phase 2: Re-implement when ProficiencyCalculator is created
     suspend fun getPilotRank(): PilotRank {
-        val proficiencies = getAllProficiencyRatings()
-        val totals = getTotals()
-        return ProficiencyCalculator.calculatePilotRank(proficiencies, totals.totalSessions)
+        // Default to Student Pilot for MVP
+        return PilotRank.STUDENT_PILOT
     }
 
     suspend fun getBestSession(): LogbookEntry? {
@@ -399,7 +410,9 @@ class LogbookRepository(
 
     /**
      * Generate export data for a date range
+     * TODO Phase 2: Re-enable when LogbookExportData is implemented
      */
+    /*
     suspend fun generateExportData(startDate: Long, endDate: Long): LogbookExportData {
         val entries = getEntriesForExport(startDate, endDate)
         val proficiencies = getAllProficiencyRatings()
@@ -425,6 +438,7 @@ class LogbookRepository(
             userInfo = userInfo
         )
     }
+    */
 
     suspend fun getEntriesForExport(startDate: Long, endDate: Long): List<LogbookEntry> {
         return logbookDao.getEntriesForExport(startDate, endDate)

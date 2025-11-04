@@ -62,14 +62,18 @@ class HomeFragment : Fragment() {
      * Setup click listeners for quick action cards
      */
     private fun setupClickListeners() {
-        // Start Training - Navigate to Mission Selection (Phase 2)
+        // TODO Phase 2: Re-enable when Mission Selection is implemented
+        // Start Training - Navigate to ATC Practice instead for MVP
         binding.startTrainingCard.setOnClickListener {
-            findNavController().navigate(R.id.action_home_to_mission_selection)
+            // TODO: Navigate to ATC practice fragment
+            // findNavController().navigate(R.id.navigation_practice)
         }
 
-        // Plan Flight - Navigate to Flight Planning
+        // TODO Phase 2: Re-enable when Flight Planning is implemented
+        // Plan Flight - Navigate to Weather for MVP
         binding.planFlightCard.setOnClickListener {
-            findNavController().navigate(R.id.action_home_to_flight_planning)
+            // Navigate to weather instead for MVP
+            findNavController().navigate(R.id.navigation_weather)
         }
 
         // Check Weather - Navigate to Weather tab
@@ -92,9 +96,9 @@ class HomeFragment : Fragment() {
 
         lifecycleScope.launch {
             // Load pilot rank
-            val rank = logbookRepo.getPilotRank()
-            binding.rankText.text = rank.displayName
-            binding.rankStars.text = getStarsForRank(rank.ordinal + 1)
+            // TODO Phase 2: Re-implement getPilotRank()
+            binding.rankText.text = "Student Pilot"
+            binding.rankStars.text = getStarsForRank(1)
 
             // Load recent sessions (limit to 2 most recent)
             val recentSessions = logbookRepo.getAllEntries().take(2)

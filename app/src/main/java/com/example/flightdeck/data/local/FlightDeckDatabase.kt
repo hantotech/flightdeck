@@ -18,7 +18,6 @@ import com.example.flightdeck.data.model.ATISBroadcast
 import com.example.flightdeck.data.model.LogbookEntry
 import com.example.flightdeck.data.model.ProficiencyRating
 import com.example.flightdeck.data.model.LogbookTotals
-import com.example.flightdeck.data.model.Converters
 import com.example.flightdeck.data.knowledge.AviationDocument
 
 @Database(

@@ -3,6 +3,7 @@ package com.example.flightdeck.di
 import android.content.Context
 import com.example.flightdeck.data.local.FlightDeckDatabase
 import com.example.flightdeck.data.repository.*
+import com.example.flightdeck.data.remote.weather.AviationWeatherService
 
 /**
  * Application-level dependency container
@@ -24,10 +25,15 @@ class AppContainer(context: Context) {
         AirportRepository(database.airportDao())
     }
 
+    val weatherService: AviationWeatherService by lazy {
+        AviationWeatherService()
+    }
+
     val atisRepository: ATISRepository by lazy {
         ATISRepository(
             atisDao = database.atisDao(),
-            airportRepository = airportRepository
+            airportRepository = airportRepository,
+            weatherService = weatherService
         )
     }
 

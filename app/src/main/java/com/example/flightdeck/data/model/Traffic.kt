@@ -60,6 +60,28 @@ enum class FlightRules {
 }
 
 /**
+ * Traffic density levels for scenario realism
+ */
+enum class TrafficDensity {
+    NONE,
+    LIGHT,
+    MODERATE,
+    BUSY,
+    CONGESTED
+}
+
+/**
+ * Weather complexity levels for training scenarios
+ */
+enum class WeatherComplexity {
+    CLEAR_CALM,
+    TYPICAL_VFR,
+    CHALLENGING,
+    MARGINAL_VFR,
+    IFR_CONDITIONS
+}
+
+/**
  * Traffic event for ATC scenario realism
  * Examples: "Skyhawk 345 holding short runway 31", "Citation on 3-mile final"
  */
