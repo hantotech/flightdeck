@@ -149,18 +149,37 @@ class ATCViewModel(private val atcRepo: ATCRepository) : ViewModel() {
                 val groundFreq = frequencies.firstOrNull { it.type == FrequencyType.GROUND }
                 val towerFreq = frequencies.firstOrNull { it.type == FrequencyType.TOWER }
 
-                // Build initial ATC greeting
-                val initialGreeting = buildString {
-                    append("Welcome to ")
+                // Calculate direction of flight
+                val direction = if (departureAirport != null && arrivalAirport != null) {
+                    val latDiff = arrivalAirport.latitude - departureAirport.latitude
+                    val lonDiff = arrivalAirport.longitude - departureAirport.longitude
+                    when {
+                        latDiff > 0.05 && lonDiff > 0.05 -> "northeast"
+                        latDiff > 0.05 && lonDiff < -0.05 -> "northwest"
+                        latDiff < -0.05 && lonDiff > 0.05 -> "southeast"
+                        latDiff < -0.05 && lonDiff < -0.05 -> "southwest"
+                        latDiff > 0.05 -> "north"
+                        latDiff < -0.05 -> "south"
+                        lonDiff > 0.05 -> "east"
+                        lonDiff < -0.05 -> "west"
+                        else -> "local"
+                    }
+                } else "local"
+
+                // Build contextual guidance for the pilot
+                val pilotGuidance = buildString {
+                    append("You're at the ramp at ")
                     append(departureAirport?.name ?: departureIcao)
+                    append(", ready for a ${direction}bound VFR departure to ")
+                    append(arrivalAirport?.name ?: arrivalIcao)
                     append(". ")
                     if (groundFreq != null) {
-                        append("Ground frequency ${groundFreq.frequency}. ")
+                        append("\n\nContact Ground on ${groundFreq.frequency} to request taxi clearance. ")
+                        append("Include: who you are (callsign), where you are, and where you want to go.")
+                    } else if (towerFreq != null) {
+                        append("\n\nContact Tower on ${towerFreq.frequency} to request departure. ")
+                        append("Include: who you are (callsign), where you are, and your intentions.")
                     }
-                    if (towerFreq != null) {
-                        append("Tower ${towerFreq.frequency}. ")
-                    }
-                    append("Ready for your radio call.")
                 }
 
                 // Set up initial messages
@@ -170,15 +189,11 @@ class ATCViewModel(private val atcRepo: ATCRepository) : ViewModel() {
                         type = MessageType.SYSTEM
                     ),
                     ChatMessage(
-                        text = scenarioDescription,
+                        text = pilotGuidance,
                         type = MessageType.SYSTEM
                     ),
                     ChatMessage(
-                        text = initialGreeting,
-                        type = MessageType.ATC
-                    ),
-                    ChatMessage(
-                        text = "Press and hold the PTT button to begin your radio call...",
+                        text = "Press and hold PTT when ready to make your radio call.",
                         type = MessageType.SYSTEM
                     )
                 )

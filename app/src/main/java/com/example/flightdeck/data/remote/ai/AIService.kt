@@ -1,42 +1,22 @@
 package com.example.flightdeck.data.remote.ai
 
+import android.util.Log
 import com.example.flightdeck.BuildConfig
+import com.google.ai.client.generativeai.GenerativeModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 /**
  * AI Service for managing LLM interactions
- * Handles communication with Claude API for realistic aviation scenarios
+ * Uses Gemini API for realistic aviation scenarios
  */
 class AIService {
 
-    private val anthropicApi: AnthropicApiService by lazy {
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) {
-                HttpLoggingInterceptor.Level.BODY
-            } else {
-                HttpLoggingInterceptor.Level.NONE
-            }
-        }
-
-        val client = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .build()
-
-        Retrofit.Builder()
-            .baseUrl("https://api.anthropic.com/")
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(AnthropicApiService::class.java)
+    private val geminiModel: GenerativeModel by lazy {
+        GenerativeModel(
+            modelName = "gemini-1.5-flash",
+            apiKey = BuildConfig.GEMINI_API_KEY
+        )
     }
 
     /**
@@ -47,30 +27,18 @@ class AIService {
         context: ATCContext
     ): Result<String> = withContext(Dispatchers.IO) {
         try {
+            Log.d("AIService", "generateATCResponse called with: $pilotMessage")
             val systemPrompt = buildATCSystemPrompt(context)
+            val fullPrompt = "$systemPrompt\n\nPilot: $pilotMessage\n\nATC Response:"
 
-            val request = ClaudeRequest(
-                model = "claude-3-5-sonnet-20241022",
-                system = systemPrompt,
-                messages = listOf(
-                    Message(role = "user", content = pilotMessage)
-                ),
-                maxTokens = 1024,
-                temperature = 0.8
-            )
+            Log.d("AIService", "Calling Gemini API...")
+            val response = geminiModel.generateContent(fullPrompt)
+            val text = response.text ?: ""
+            Log.d("AIService", "Gemini response: $text")
 
-            val response = anthropicApi.sendMessage(
-                apiKey = BuildConfig.ANTHROPIC_API_KEY,
-                request = request
-            )
-
-            if (response.isSuccessful && response.body() != null) {
-                val text = response.body()!!.content.firstOrNull()?.text ?: ""
-                Result.success(text)
-            } else {
-                Result.failure(Exception("API Error: ${response.code()}"))
-            }
+            Result.success(text)
         } catch (e: Exception) {
+            Log.e("AIService", "Gemini API error", e)
             Result.failure(e)
         }
     }
@@ -84,7 +52,7 @@ class AIService {
         context: ATCContext
     ): Result<ATCEvaluation> = withContext(Dispatchers.IO) {
         try {
-            val systemPrompt = """
+            val prompt = """
                 You are an expert flight instructor evaluating student pilot radio communications.
                 Evaluate the pilot's message for:
                 1. Proper phraseology and format
@@ -92,41 +60,17 @@ class AIService {
                 3. Clarity and professionalism
                 4. Safety considerations
 
-                Provide a JSON response with:
-                - score (0-100)
-                - isCorrect (boolean)
-                - feedback (string explaining what was good/needs improvement)
-                - suggestions (list of specific improvements)
-            """.trimIndent()
-
-            val userPrompt = """
                 Scenario: ${context.scenarioType} at ${context.airport}
                 Expected phraseology examples: ${expectedPhrasings.joinToString(" OR ")}
 
                 Pilot's communication: "$pilotMessage"
 
-                Evaluate this communication.
+                Provide a score (0-100) and brief feedback.
             """.trimIndent()
 
-            val request = ClaudeRequest(
-                system = systemPrompt,
-                messages = listOf(Message(role = "user", content = userPrompt)),
-                maxTokens = 1024,
-                temperature = 0.3
-            )
-
-            val response = anthropicApi.sendMessage(
-                apiKey = BuildConfig.ANTHROPIC_API_KEY,
-                request = request
-            )
-
-            if (response.isSuccessful && response.body() != null) {
-                val text = response.body()!!.content.firstOrNull()?.text ?: ""
-                // Parse the response (would use proper JSON parsing in production)
-                Result.success(parseATCEvaluation(text))
-            } else {
-                Result.failure(Exception("API Error: ${response.code()}"))
-            }
+            val response = geminiModel.generateContent(prompt)
+            val text = response.text ?: ""
+            Result.success(parseATCEvaluation(text))
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -141,37 +85,21 @@ class AIService {
         userQuestion: String?
     ): Result<String> = withContext(Dispatchers.IO) {
         try {
-            val systemPrompt = """
-                You are an experienced flight instructor helping a student pilot with pre-flight checklists.
-                Provide clear, concise, safety-focused guidance.
-                Reference the POH (Pilot's Operating Handbook) when appropriate.
-                Keep responses brief and practical.
-            """.trimIndent()
-
-            val userPrompt = if (userQuestion != null) {
-                "Aircraft: $aircraftType\nChecklist item: $checklistItem\nQuestion: $userQuestion"
-            } else {
-                "Aircraft: $aircraftType\nChecklist item: $checklistItem\nProvide a brief explanation of this checklist item."
+            val prompt = buildString {
+                append("You are an experienced flight instructor helping with pre-flight checklists.\n")
+                append("Provide clear, concise, safety-focused guidance.\n\n")
+                append("Aircraft: $aircraftType\n")
+                append("Checklist item: $checklistItem\n")
+                if (userQuestion != null) {
+                    append("Question: $userQuestion")
+                } else {
+                    append("Provide a brief explanation of this checklist item.")
+                }
             }
 
-            val request = ClaudeRequest(
-                system = systemPrompt,
-                messages = listOf(Message(role = "user", content = userPrompt)),
-                maxTokens = 512,
-                temperature = 0.5
-            )
-
-            val response = anthropicApi.sendMessage(
-                apiKey = BuildConfig.ANTHROPIC_API_KEY,
-                request = request
-            )
-
-            if (response.isSuccessful && response.body() != null) {
-                val text = response.body()!!.content.firstOrNull()?.text ?: ""
-                Result.success(text)
-            } else {
-                Result.failure(Exception("API Error: ${response.code()}"))
-            }
+            val response = geminiModel.generateContent(prompt)
+            val text = response.text ?: ""
+            Result.success(text)
         } catch (e: Exception) {
             Result.failure(e)
         }
@@ -187,13 +115,9 @@ class AIService {
         weatherConditions: String?
     ): Result<String> = withContext(Dispatchers.IO) {
         try {
-            val systemPrompt = """
-                You are an experienced flight instructor helping with flight planning.
-                Consider factors like weather, fuel requirements, alternates, and regulations.
-                Provide practical, safety-focused advice.
-            """.trimIndent()
-
-            val userPrompt = buildString {
+            val prompt = buildString {
+                append("You are an experienced flight instructor helping with flight planning.\n")
+                append("Consider weather, fuel, alternates, and regulations.\n\n")
                 append("Flight Planning Request:\n")
                 append("From: $departure\n")
                 append("To: $arrival\n")
@@ -204,24 +128,9 @@ class AIService {
                 append("\nProvide flight planning recommendations.")
             }
 
-            val request = ClaudeRequest(
-                system = systemPrompt,
-                messages = listOf(Message(role = "user", content = userPrompt)),
-                maxTokens = 2048,
-                temperature = 0.6
-            )
-
-            val response = anthropicApi.sendMessage(
-                apiKey = BuildConfig.ANTHROPIC_API_KEY,
-                request = request
-            )
-
-            if (response.isSuccessful && response.body() != null) {
-                val text = response.body()!!.content.firstOrNull()?.text ?: ""
-                Result.success(text)
-            } else {
-                Result.failure(Exception("API Error: ${response.code()}"))
-            }
+            val response = geminiModel.generateContent(prompt)
+            val text = response.text ?: ""
+            Result.success(text)
         } catch (e: Exception) {
             Result.failure(e)
         }

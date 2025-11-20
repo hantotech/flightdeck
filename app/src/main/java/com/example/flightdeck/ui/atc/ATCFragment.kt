@@ -3,6 +3,7 @@ package com.example.flightdeck.ui.atc
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -46,7 +47,7 @@ class ATCFragment : Fragment() {
     private var voiceOutputManager: VoiceOutputManager? = null
     private var isVoiceReady = false
     private var isSessionActive = false
-    private var useVoiceInput = true
+    private var useVoiceInput = false // Default to text for easier testing
 
     // Microphone permission launcher
     private val requestPermissionLauncher = registerForActivityResult(
@@ -76,7 +77,16 @@ class ATCFragment : Fragment() {
         setupRecyclerView()
         setupClickListeners()
         observeViewModel()
-        checkMicrophonePermission()
+
+        // Force text input for now (voice can be enabled later)
+        binding.voiceControlsCard.visibility = View.GONE
+        binding.textInputCard.visibility = View.VISIBLE
+
+        // Still initialize voice output for TTS
+        voiceOutputManager = VoiceOutputManager(requireContext()) { initialized ->
+            isVoiceReady = initialized
+            Log.d("ATCFragment", "VoiceOutputManager initialized: $initialized")
+        }
     }
 
     private fun checkMicrophonePermission() {
@@ -119,6 +129,7 @@ class ATCFragment : Fragment() {
         // Initialize voice output
         voiceOutputManager = VoiceOutputManager(requireContext()) { initialized ->
             isVoiceReady = initialized
+            Log.d("ATCFragment", "VoiceOutputManager initialized: $initialized, isVoiceReady: $isVoiceReady")
             if (!initialized) {
                 Toast.makeText(requireContext(), "Voice output initialization failed", Toast.LENGTH_SHORT).show()
             }
@@ -260,14 +271,10 @@ class ATCFragment : Fragment() {
             // Show voice controls
             binding.voiceControlsCard.visibility = View.VISIBLE
             binding.textInputCard.visibility = View.GONE
-            binding.toggleInputButton.text = "Use Text Input"
         } else {
             // Show text input
             binding.voiceControlsCard.visibility = View.GONE
             binding.textInputCard.visibility = View.VISIBLE
-            binding.toggleInputButton.text = "Use Voice Input"
-            // Move toggle button to text input card
-            binding.toggleInputButton.visibility = View.GONE // Temporarily hide, would need to restructure layout
         }
     }
 
@@ -289,8 +296,12 @@ class ATCFragment : Fragment() {
 
                     // Speak ATC responses (messages from ATC, not pilot)
                     val lastMessage = messages.last()
+                    Log.d("ATCFragment", "Message type: ${lastMessage.type}, isVoiceReady: $isVoiceReady")
                     if (lastMessage.type == com.example.flightdeck.ui.atc.MessageType.ATC && isVoiceReady) {
+                        Log.d("ATCFragment", "Speaking: ${lastMessage.text}")
                         voiceOutputManager?.speak(lastMessage.text)
+                    } else if (lastMessage.type == com.example.flightdeck.ui.atc.MessageType.ATC) {
+                        Log.w("ATCFragment", "Cannot speak - isVoiceReady: $isVoiceReady")
                     }
                 }
             }

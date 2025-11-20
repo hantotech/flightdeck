@@ -19,7 +19,7 @@ android {
 
         // API Keys - Store in local.properties for production
         buildConfigField("String", "ANTHROPIC_API_KEY", "\"\"")
-        buildConfigField("String", "GEMINI_API_KEY", "\"\"")
+        buildConfigField("String", "GEMINI_API_KEY", "\"AIzaSyB-SdcS1P8FKguWQcfc1avuKhgirrtaAUw\"")
         buildConfigField("String", "WEATHER_API_KEY", "\"\"")
     }
 
@@ -68,7 +68,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     // Gemini AI SDK
-    implementation("com.google.ai.client.generativeai:generativeai:0.1.2")
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")

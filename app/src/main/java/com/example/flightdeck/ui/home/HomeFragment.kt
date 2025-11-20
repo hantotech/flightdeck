@@ -62,11 +62,9 @@ class HomeFragment : Fragment() {
      * Setup click listeners for quick action cards
      */
     private fun setupClickListeners() {
-        // TODO Phase 2: Re-enable when Mission Selection is implemented
-        // Start Training - Navigate to ATC Practice instead for MVP
+        // Start Training - Navigate to ATC Practice
         binding.startTrainingCard.setOnClickListener {
-            // TODO: Navigate to ATC practice fragment
-            // findNavController().navigate(R.id.navigation_practice)
+            findNavController().navigate(R.id.navigation_practice)
         }
 
         // TODO Phase 2: Re-enable when Flight Planning is implemented
