@@ -52,10 +52,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:lineSpacingExtra="4dp"
-        android:text="• AI-powered ATC simulation\n• Real-time weather data\n• Digital logbook tracking\n• Comprehensive training scenarios\n• FAR/AIM knowledge base"
+        android:lineSpacingExtra="8dp"
+        android:text="✈️  AI-Powered ATC Controllers\nPractice with realistic AI responses\n\n🎤  Voice Radio Communications\nUse Push-to-Talk just like real pilots\n\n📊  Instant Feedback &amp; Scoring\nImprove your phraseology skills\n\n📖  Digital Logbook\nTrack your progress over time"
         android:textColor="@color/text_primary"
-        android:textSize="16sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subtitleText" />

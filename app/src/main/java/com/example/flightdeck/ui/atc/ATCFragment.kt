@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.flightdeck.FlightDeckApplication
 import com.example.flightdeck.R
@@ -24,8 +25,10 @@ import com.example.flightdeck.di.ViewModelFactory
 import com.example.flightdeck.utils.VoiceInputManager
 import com.example.flightdeck.utils.VoiceOutputManager
 import com.example.flightdeck.utils.VoiceResult
+import com.example.flightdeck.utils.NetworkUtils
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import android.os.Bundle as SystemBundle
 
 /**
  * ATC Simulator Fragment
@@ -41,13 +44,14 @@ class ATCFragment : Fragment() {
         ViewModelFactory(app.appContainer)
     }
     private lateinit var chatAdapter: ChatMessageAdapter
+    private lateinit var trafficAdapter: TrafficAdapter
 
     // Voice managers
     private var voiceInputManager: VoiceInputManager? = null
     private var voiceOutputManager: VoiceOutputManager? = null
     private var isVoiceReady = false
     private var isSessionActive = false
-    private var useVoiceInput = false // Default to text for easier testing
+    private var useVoiceInput = true // Enable voice by default for realistic ATC practice
 
     // Microphone permission launcher
     private val requestPermissionLauncher = registerForActivityResult(
@@ -78,14 +82,21 @@ class ATCFragment : Fragment() {
         setupClickListeners()
         observeViewModel()
 
-        // Force text input for now (voice can be enabled later)
-        binding.voiceControlsCard.visibility = View.GONE
-        binding.textInputCard.visibility = View.VISIBLE
-
-        // Still initialize voice output for TTS
-        voiceOutputManager = VoiceOutputManager(requireContext()) { initialized ->
-            isVoiceReady = initialized
-            Log.d("ATCFragment", "VoiceOutputManager initialized: $initialized")
+        // Enable voice input by default for realistic ATC practice
+        if (useVoiceInput) {
+            binding.voiceControlsCard.visibility = View.VISIBLE
+            binding.textInputCard.visibility = View.GONE
+            binding.toggleInputButton.text = "Use Text Input"
+            // Check for microphone permission
+            checkMicrophonePermission()
+        } else {
+            binding.voiceControlsCard.visibility = View.GONE
+            binding.textInputCard.visibility = View.VISIBLE
+            // Initialize voice output for TTS even in text mode
+            voiceOutputManager = VoiceOutputManager(requireContext()) { initialized ->
+                isVoiceReady = initialized
+                Log.d("ATCFragment", "VoiceOutputManager initialized: $initialized")
+            }
         }
     }
 
@@ -144,6 +155,12 @@ class ATCFragment : Fragment() {
             }
             adapter = chatAdapter
         }
+
+        trafficAdapter = TrafficAdapter()
+        binding.trafficRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = trafficAdapter
+        }
     }
 
     private fun setupClickListeners() {
@@ -188,9 +205,30 @@ class ATCFragment : Fragment() {
         binding.sendButton.setOnClickListener {
             val message = binding.messageInput.text.toString()
             if (message.isNotBlank()) {
+                // Check network connectivity before sending
+                if (!NetworkUtils.isNetworkAvailable(requireContext())) {
+                    Toast.makeText(
+                        requireContext(),
+                        "No internet connection. Please check your network settings.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return@setOnClickListener
+                }
                 viewModel.sendPilotMessage(message)
                 binding.messageInput.text?.clear()
             }
+        }
+
+        // End Session button
+        binding.endSessionButton.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle("End Practice Session")
+                .setMessage("Are you sure you want to end this session? You'll receive a performance summary.")
+                .setPositiveButton("End Session") { _, _ ->
+                    viewModel.endSession()
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
         }
     }
 
@@ -268,13 +306,22 @@ class ATCFragment : Fragment() {
         useVoiceInput = !useVoiceInput
 
         if (useVoiceInput) {
-            // Show voice controls
+            // Show voice controls and check permissions
             binding.voiceControlsCard.visibility = View.VISIBLE
             binding.textInputCard.visibility = View.GONE
+            binding.toggleInputButton.text = "Use Text Input"
+            checkMicrophonePermission()
         } else {
             // Show text input
             binding.voiceControlsCard.visibility = View.GONE
             binding.textInputCard.visibility = View.VISIBLE
+            // Initialize voice output for TTS if not already initialized
+            if (voiceOutputManager == null) {
+                voiceOutputManager = VoiceOutputManager(requireContext()) { initialized ->
+                    isVoiceReady = initialized
+                    Log.d("ATCFragment", "VoiceOutputManager initialized: $initialized")
+                }
+            }
         }
     }
 
@@ -314,11 +361,61 @@ class ATCFragment : Fragment() {
             binding.pttButton.isEnabled = !isLoading
         }
 
-        // Errors
+        // Errors - show user-friendly messages
         viewModel.error.observe(viewLifecycleOwner) { error ->
-            error?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+            error?.let { errorMessage ->
+                // Parse error message to show user-friendly text
+                val displayMessage = when {
+                    errorMessage.contains("network", ignoreCase = true) ||
+                    errorMessage.contains("connection", ignoreCase = true) ||
+                    errorMessage.contains("timeout", ignoreCase = true) ->
+                        "Connection error. Please check your internet and try again."
+                    errorMessage.contains("API", ignoreCase = true) ||
+                    errorMessage.contains("Gemini", ignoreCase = true) ->
+                        "AI service temporarily unavailable. Please try again."
+                    else -> errorMessage
+                }
+
+                Toast.makeText(requireContext(), displayMessage, Toast.LENGTH_LONG).show()
                 viewModel.clearError()
+            }
+        }
+
+        // Session summary - navigate to summary screen when ready
+        viewModel.sessionSummary.observe(viewLifecycleOwner) { summary ->
+            summary?.let {
+                // Navigate to SessionSummaryFragment
+                val bundle = SystemBundle().apply {
+                    putSerializable("sessionSummary", it)
+                }
+                findNavController().navigate(
+                    R.id.action_practice_to_session_summary,
+                    bundle
+                )
+                viewModel.clearSessionSummary()
+
+                // Reset UI state
+                isSessionActive = false
+                binding.sessionInfoCard.visibility = View.GONE
+                binding.trafficCard.visibility = View.GONE
+                binding.flightEntryCard.visibility = View.VISIBLE
+            }
+        }
+
+        // Active traffic
+        viewModel.activeTraffic.observe(viewLifecycleOwner) { traffic ->
+            if (isSessionActive) {
+                if (traffic.isNotEmpty()) {
+                    binding.trafficCard.visibility = View.VISIBLE
+                    binding.noTrafficText.visibility = View.GONE
+                    trafficAdapter.submitList(traffic)
+                } else {
+                    binding.trafficCard.visibility = View.VISIBLE
+                    binding.noTrafficText.visibility = View.VISIBLE
+                    trafficAdapter.submitList(emptyList())
+                }
+            } else {
+                binding.trafficCard.visibility = View.GONE
             }
         }
     }

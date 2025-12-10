@@ -32,30 +32,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/illustrationImage" />
 
-    <!-- Subtitle/Features -->
+    <!-- Subtitle -->
     <TextView
         android:id="@+id/subtitleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:lineSpacingExtra="6dp"
-        android:text="@string/onboarding_progress_subtitle"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Get AI-Powered Feedback &amp; Track Progress"
         android:textColor="@color/text_secondary"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
-    <!-- Additional Info -->
+    <!-- Tutorial Steps -->
     <TextView
         android:id="@+id/descriptionText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="Your training journey is tracked across 10 key aviation skills. Watch your proficiency grow from Student to Commercial pilot level."
-        android:textColor="@color/text_secondary"
-        android:textSize="14sp"
+        android:lineSpacingExtra="8dp"
+        android:text="📈  After Each Session\nGet a detailed performance score (0-100%)\n\n✓  What Went Well\nSee your strengths and correct phraseology\n\n→  Areas to Improve\nReceive specific, actionable feedback\n\n📖  Digital Logbook\nTrack improvement across 10 key skills\n\n🎯  Ready to start practicing?\nTap 'Get Started' and choose your first airports!"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subtitleText" />

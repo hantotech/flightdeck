@@ -15,7 +15,17 @@
         android:id="@+id/navigation_practice"
         android:name="com.example.flightdeck.ui.atc.ATCFragment"
         android:label="@string/title_practice"
-        tools:layout="@layout/fragment_atc" />
+        tools:layout="@layout/fragment_atc">
+        <action
+            android:id="@+id/action_practice_to_session_summary"
+            app:destination="@id/navigation_session_summary" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_session_summary"
+        android:name="com.example.flightdeck.ui.atc.SessionSummaryFragment"
+        android:label="Session Summary"
+        tools:layout="@layout/fragment_session_summary" />
 
     <fragment
         android:id="@+id/navigation_weather"

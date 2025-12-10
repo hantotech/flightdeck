@@ -1,5 +1,7 @@
 package com.example.flightdeck.ui.atc
 
+import java.io.Serializable
+
 /**
  * Represents a single message in the ATC chat interface
  */
@@ -7,7 +9,7 @@ data class ChatMessage(
     val text: String,
     val type: MessageType,
     val timestamp: Long = System.currentTimeMillis()
-)
+) : Serializable
 
 /**
  * Types of messages in the ATC simulator

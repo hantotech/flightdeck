@@ -32,30 +32,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/illustrationImage" />
 
-    <!-- Subtitle/Features -->
+    <!-- Subtitle -->
     <TextView
         android:id="@+id/subtitleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:lineSpacingExtra="6dp"
-        android:text="@string/onboarding_features_subtitle"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="How to Use Push-to-Talk (PTT)"
         android:textColor="@color/text_secondary"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
-    <!-- Additional Info -->
+    <!-- Tutorial Steps -->
     <TextView
         android:id="@+id/descriptionText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="Master radio communications in a safe, simulated environment. Practice ground, tower, and approach procedures with AI controllers."
-        android:textColor="@color/text_secondary"
-        android:textSize="14sp"
+        android:lineSpacingExtra="8dp"
+        android:text="1️⃣  Start a Practice Session\nEnter departure and arrival airports\n\n2️⃣  Press and Hold PTT Button\nJust like a real radio\n\n3️⃣  Speak Your Radio Call\nUse proper aviation phraseology\n\n4️⃣  Release to Send\nAI controller responds instantly\n\n💡 Tip: You can also use text input if voice isn't available!"
+        android:textColor="@color/text_primary"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subtitleText" />

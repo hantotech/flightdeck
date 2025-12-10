@@ -185,6 +185,28 @@ class ATCRepository(
         return result
     }
 
+    /**
+     * Generate comprehensive session summary with AI-powered feedback
+     */
+    suspend fun generateSessionSummary(
+        sessionId: Long,
+        scenario: ATCScenario,
+        transcript: String,
+        durationMinutes: Int
+    ): Result<com.example.flightdeck.data.remote.ai.SessionFeedback> {
+        val context = ATCContext(
+            airport = scenario.airport,
+            scenarioType = scenario.scenarioType.name,
+            conditions = scenario.situation
+        )
+
+        return aiService.generateSessionSummary(
+            transcript = transcript,
+            context = context,
+            sessionDuration = durationMinutes
+        )
+    }
+
     // Session Statistics
     fun getAllPracticeSessions(): Flow<List<ATCPracticeSession>> =
         atcDao.getAllPracticeSessions()

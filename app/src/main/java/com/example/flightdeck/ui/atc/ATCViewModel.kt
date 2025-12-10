@@ -34,6 +34,15 @@ class ATCViewModel(private val atcRepo: ATCRepository) : ViewModel() {
 
     // Session tracking
     private var currentSessionId: Long? = null
+    private var sessionStartTime: Long = 0
+
+    // Session summary
+    private val _sessionSummary = MutableLiveData<com.example.flightdeck.data.model.SessionSummary?>()
+    val sessionSummary: LiveData<com.example.flightdeck.data.model.SessionSummary?> = _sessionSummary
+
+    // Active traffic
+    private val _activeTraffic = MutableLiveData<List<com.example.flightdeck.data.model.SimulatedTraffic>>(emptyList())
+    val activeTraffic: LiveData<List<com.example.flightdeck.data.model.SimulatedTraffic>> = _activeTraffic
 
     init {
         loadDefaultScenario()
@@ -68,6 +77,7 @@ class ATCViewModel(private val atcRepo: ATCRepository) : ViewModel() {
 
                 // Start new session
                 currentSessionId = atcRepo.startPracticeSession(scenario.id)
+                sessionStartTime = System.currentTimeMillis()
                 _currentScenario.value = scenario
 
                 // Clear messages and add welcome message
@@ -136,6 +146,7 @@ class ATCViewModel(private val atcRepo: ATCRepository) : ViewModel() {
 
                 // Start session with base scenario
                 currentSessionId = atcRepo.startPracticeSession(baseScenario.id)
+                sessionStartTime = System.currentTimeMillis()
 
                 // Override scenario details for custom flight
                 _currentScenario.value = baseScenario.copy(
@@ -200,6 +211,9 @@ class ATCViewModel(private val atcRepo: ATCRepository) : ViewModel() {
 
                 _error.value = null
                 _isLoading.value = false
+
+                // Load traffic for this session
+                loadActiveTraffic()
 
             } catch (e: Exception) {
                 _isLoading.value = false
@@ -275,6 +289,119 @@ class ATCViewModel(private val atcRepo: ATCRepository) : ViewModel() {
      */
     fun clearError() {
         _error.value = null
+    }
+
+    /**
+     * End the current practice session and generate feedback summary
+     */
+    fun endSession() {
+        val scenario = _currentScenario.value
+        val sessionId = currentSessionId
+        val messages = _messages.value ?: emptyList()
+
+        if (scenario == null || sessionId == null) {
+            _error.value = "No active session to end"
+            return
+        }
+
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+
+                // Calculate session duration
+                val endTime = System.currentTimeMillis()
+                val durationMs = endTime - sessionStartTime
+                val durationMinutes = (durationMs / 60000).toInt().coerceAtLeast(1)
+
+                // Build transcript for AI analysis
+                val transcript = messages.joinToString("\n") { message ->
+                    when (message.type) {
+                        MessageType.PILOT -> "Pilot: ${message.text}"
+                        MessageType.ATC -> "ATC: ${message.text}"
+                        MessageType.SYSTEM -> "System: ${message.text}"
+                    }
+                }
+
+                // Generate session summary using AI
+                val summary = atcRepo.generateSessionSummary(
+                    sessionId = sessionId,
+                    scenario = scenario,
+                    transcript = transcript,
+                    durationMinutes = durationMinutes
+                )
+
+                summary.fold(
+                    onSuccess = { feedback ->
+                        // Create SessionSummary object for UI
+                        val sessionSummary = com.example.flightdeck.data.model.SessionSummary(
+                            sessionId = sessionId,
+                            sessionTitle = scenario.title,
+                            startTime = sessionStartTime,
+                            endTime = endTime,
+                            durationMinutes = durationMinutes,
+                            overallScore = feedback.overallScore,
+                            scoreDescription = feedback.scoreDescription,
+                            strengths = feedback.strengths,
+                            improvements = feedback.improvements,
+                            transcript = messages,
+                            metrics = com.example.flightdeck.data.model.SessionMetrics(
+                                totalExchanges = messages.count { it.type == MessageType.PILOT },
+                                phraseologyScore = feedback.phraseologyScore,
+                                clarityScore = feedback.clarityScore,
+                                procedureScore = feedback.procedureScore,
+                                responseTimeAverage = 0f // Can be calculated if we track timestamps
+                            )
+                        )
+
+                        // End session in repository
+                        atcRepo.endPracticeSession(
+                            sessionId = sessionId,
+                            score = feedback.overallScore,
+                            accuracyPercentage = (feedback.phraseologyScore + feedback.clarityScore + feedback.procedureScore) / 3
+                        )
+
+                        _sessionSummary.value = sessionSummary
+                        _isLoading.value = false
+
+                        // Clear current session
+                        currentSessionId = null
+                        sessionStartTime = 0
+                    },
+                    onFailure = { exception ->
+                        _isLoading.value = false
+                        _error.value = "Failed to generate summary: ${exception.message}"
+                    }
+                )
+
+            } catch (e: Exception) {
+                _isLoading.value = false
+                _error.value = "Error ending session: ${e.message}"
+            }
+        }
+    }
+
+    /**
+     * Clear session summary after navigation
+     */
+    fun clearSessionSummary() {
+        _sessionSummary.value = null
+    }
+
+    /**
+     * Load active traffic for current session
+     */
+    private fun loadActiveTraffic() {
+        val sessionId = currentSessionId ?: return
+
+        viewModelScope.launch {
+            try {
+                val traffic = atcRepo.getActiveTraffic(sessionId)
+                _activeTraffic.value = traffic
+            } catch (e: Exception) {
+                // Traffic loading is non-critical, just log error
+                android.util.Log.e("ATCViewModel", "Error loading traffic", e)
+            }
+        }
     }
 
     /**
